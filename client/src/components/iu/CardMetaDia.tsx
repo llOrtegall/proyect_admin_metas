@@ -5,10 +5,11 @@ interface Props {
   titulo: string
   venta: number
   porcentaje: number
+  metaDia?: number
 }
 
 // TODO: aqui solo recibe un objecto con dos propiedades, nombre y venta
-export function CardMetaDia ({ titulo, venta, porcentaje }: Props): JSX.Element {
+export function CardMetaDia ({ titulo, venta, porcentaje, metaDia }: Props): JSX.Element {
   const vtaFortCol = new Intl.NumberFormat('es-CO').format(venta)
   return (
     <Card className="flex flex-col gap-2 dark:text-white" decoration="top" decorationColor={DeterminarColor(porcentaje)}>
@@ -16,6 +17,7 @@ export function CardMetaDia ({ titulo, venta, porcentaje }: Props): JSX.Element 
       <p className="text-center font-semibold">$ {vtaFortCol}</p>
       <ProgressBar value={porcentaje} color={DeterminarColor(porcentaje)} />
       <p className='text-center font-medium'>Progreso Meta: {porcentaje} %</p>
+      {metaDia && <p className='text-center font-medium'>Meta Día: $ {new Intl.NumberFormat('es-CO').format(metaDia)}</p>}
     </Card>
   )
 }
