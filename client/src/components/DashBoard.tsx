@@ -4,6 +4,7 @@ import { type Product } from '../types/metas'
 import { useEffect, useState } from 'react'
 import { CardMetaDia } from './iu'
 import axios from 'axios'
+import { Card, Title } from '@tremor/react'
 
 interface response {
   productos: Product[]
@@ -36,7 +37,17 @@ const DashBoard = () => {
           <DonutChartComp products={data.productos} />
         </div>
 
-        <div className='flex w-6/12 gap-2'>
+        <div className='flex w-8/12 gap-2'>
+          <Card className="bg-white shadow-lg rounded-lg p-6">
+            <Title className="text-2xl font-bold text-gray-800 mb-4 text-center">
+              Meta del día: $ {new Intl.NumberFormat('es-CO').format(data.metaDia)}
+            </Title>
+            <article>
+              <p className="text-gray-600 text-center">
+                Esta meta del día, por el momento, se genera sumando todas las sucursales que ya tiene venta registrada del presente día.
+              </p>
+            </article>
+          </Card>
           <CardMetaDia porcentaje={calcularPorcentaje(data.ventaDia, data.metaDia)} titulo='Meta Chance Día Actual' venta={data.ventaDia} />
         </div>
       </section>
