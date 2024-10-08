@@ -1,9 +1,13 @@
-import { type ProgressBarProps } from '@tremor/react'
+import { type Color } from '@tremor/react'
 
-export function DeterminarColor (porcentaje: number): ProgressBarProps['color'] {
-  if (porcentaje < 20) return 'red'
-  if (porcentaje < 40) return 'orange'
-  if (porcentaje < 89) return 'yellow'
-  if (porcentaje < 99) return 'cyan'
-  return 'green'
+export function DeterminarColor (porcentaje: number): Color {
+  if (porcentaje < 50) {
+    return 'red'
+  } else if (porcentaje >= 50 && porcentaje < 85) {
+    return 'yellow'
+  } else if (porcentaje >= 85 && porcentaje < 100) {
+    return 'cyan'
+  } else {
+    return 'green'
+  }
 }

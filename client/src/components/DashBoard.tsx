@@ -1,8 +1,6 @@
 import { DonutChartComp } from '../components/iu/DonutChart'
 import { type Product } from '../types/metas'
-import { Card } from '@tremor/react'
 
-import { DeterminarColor } from '../utils/funciones'
 import { useEffect, useState } from 'react'
 import { CardMetaDia } from './iu'
 import axios from 'axios'
@@ -34,12 +32,12 @@ const DashBoard = () => {
     <article className='p-2'>
 
       <section className='flex items-center justify-around '>
-        <div>
+        <div className='p-2'>
           <DonutChartComp products={data.productos} />
         </div>
 
         <div className='flex w-6/12 gap-2'>
-          <CardMetaDia porcentaje={calcularPorcentaje(data.ventaDia, data.metaDia)} titulo='Meta Chance Día Actual' venta={data.ventaDia} metaDia={data.metaDia} />
+          <CardMetaDia porcentaje={calcularPorcentaje(data.ventaDia, data.metaDia)} titulo='Meta Chance Día Actual' venta={data.ventaDia} />
         </div>
       </section>
       <section className='grid grid-cols-4 gap-2'>
