@@ -1,10 +1,11 @@
 import { DonutChartComp } from '../components/iu/DonutChart'
 import { type Product } from '../types/metas'
 
+import { CardMetaDia } from './iu/CardMetaDia'
 import { useEffect, useState } from 'react'
-import { CardMetaDia } from './iu'
-import axios from 'axios'
 import { Card, Title } from '@tremor/react'
+
+import axios from 'axios'
 
 interface response {
   productos: Product[]
