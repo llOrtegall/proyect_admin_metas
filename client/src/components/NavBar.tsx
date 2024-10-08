@@ -1,6 +1,4 @@
-import { useTheme } from '../contexts/ThemeContext'
 import { NavLink } from 'react-router-dom'
-import { Switch } from '@tremor/react'
 
 const Links = [
   { link: '/', name: 'Home' },
@@ -16,8 +14,6 @@ const LinkComponent = ({ link, name }: { link: string, name: string }): JSX.Elem
 }
 
 function NavBar (): JSX.Element {
-  const { toggleTheme } = useTheme()
-
   return (
     <nav className='bg-malibu-300 lg:py-2'>
       <ul className='flex items-center justify-around'>
@@ -29,10 +25,6 @@ function NavBar (): JSX.Element {
         <div className='hidden lg:flex gap-4 text-xl'>
           {Links.map((link, index) => <LinkComponent key={index} link={link.link} name={link.name} />)}
         </div>
-
-        <article className='hidden lg:flex lg:gap-4'>
-          <Switch onChange={toggleTheme} />
-        </article>
 
       </ul>
     </nav>
