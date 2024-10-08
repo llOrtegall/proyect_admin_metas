@@ -1,0 +1,18 @@
+version: '3'
+
+services: 
+  web:
+    image: nginx:mainline-alpine3.18-perl
+    ports:
+      - "8080:80"
+    volumes:
+      - ./config:/etc/nginx/conf.d
+      - ./client/dist:/usr/share/nginx/html
+  api:
+    image: node:latest
+    working_dir: /app
+    volumes:
+      - ./api:/app
+    ports:
+      - "3000:3000"
+    command: yarn start
