@@ -101,7 +101,6 @@ function reduceProducts(results: Meta[]): ReduceType {
   }, initialReduce);
 }
 
-
 export const getMetasController = async (req: Request, res: Response) => {
 
   try {
@@ -120,7 +119,10 @@ export const getMetasController = async (req: Request, res: Response) => {
       meta_dia: reduce[product.metaKey as keyof ReduceType]
     })).sort((a, b) => b.vta_dia - a.vta_dia);
 
-    return res.status(200).json(products)
+    const metaTotalDiaChance = reduce.meta_dia_chance + reduce.meta_dia_pagamas + reduce.meta_dia_pagatodo + reduce.meta_dia_astro
+    const ventaTotalDiaChance = reduce.chance + reduce.pagamas + reduce.pagatodo + reduce.astro
+
+    return res.status(200).json({ productos: products, metaDia: metaTotalDiaChance, vetaDia: ventaTotalDiaChance });
   } catch (error) {
     return res.status(500).json({ message: 'Internal server error' })
   }
