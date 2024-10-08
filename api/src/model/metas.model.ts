@@ -32,7 +32,7 @@ interface MetaAttributes {
   promedio_diario_recargas: number;
 }
 
-type MetaCreationAttributes = Optional<MetaAttributes, 'sucursal'>;
+type MetaCreationAttributes = Optional<MetaAttributes, 'sucursal' | 'fecha'>;
 
 export class Meta extends Model<MetaAttributes, MetaCreationAttributes> {
   declare sucursal: number;
@@ -66,8 +66,8 @@ export class Meta extends Model<MetaAttributes, MetaCreationAttributes> {
 
 Meta.init({
   sucursal: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
-  zona: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
-  fecha: { type: DataTypes.DATE, allowNull: false, primaryKey: true },
+  zona: { type: DataTypes.INTEGER, allowNull: false },
+  fecha: { type: DataTypes.DATEONLY, allowNull: false, defaultValue: DataTypes.NOW },
   chance: { type: DataTypes.INTEGER, allowNull: false },
   pagamas: { type: DataTypes.INTEGER, allowNull: false },
   pagatodo: { type: DataTypes.INTEGER, allowNull: false },

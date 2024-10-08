@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Meta } from '../model/metas.model';
 import { fn, Op } from 'sequelize';
+import { fa, faker } from '@faker-js/faker';
 
 const productDefinitions = [
   { key: 'chance', name: 'Chance', metaKey: 'meta_dia_chance' },
@@ -124,7 +125,47 @@ export const getMetasController = async (req: Request, res: Response) => {
 
     return res.status(200).json({ productos: products, metaDia: metaTotalDiaChance, ventaDia: ventaTotalDiaChance });
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' })
+    return res.status(500).json({ message: 'Error al obtener las metas' });
   }
 
+}
+
+export const createMetaController = async (req: Request, res: Response) => {
+
+  try {
+    await Meta.sync();
+    await Meta.create({
+      sucursal: faker.number.int({ min: 1000, max: 5000 }),
+      zona: 39627,
+      chance: faker.number.int({ min: 1250, max: 850250 }),
+      pagamas: faker.number.int({ min: 1250, max: 850250 }),
+      pagatodo: faker.number.int({ min: 1250, max: 850250 }),
+      chance_millonario: faker.number.int({ min: 1250, max: 850250 }),
+      doblechance: faker.number.int({ min: 1250, max: 850250 }),
+      astro: faker.number.int({ min: 1250, max: 850250 }),
+      loteria_fisica: faker.number.int({ min: 1250, max: 850250 }),
+      loteria_virtual: faker.number.int({ min: 1250, max: 850250 }),
+      betplay: faker.number.int({ min: 1250, max: 850250 }),
+      giros: faker.number.int({ min: 1250, max: 850250 }),
+      soat: faker.number.int({ min: 1250, max: 850250 }),
+      recargas: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_chance: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_pagamas: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_pagatodo: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_doblechance: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_chmill: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_astro: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_lf: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_lv: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_betplay: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_giros: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_soat: faker.number.int({ min: 1250, max: 850250 }),
+      promedio_diario_recargas: faker.number.int({ min: 1250, max: 850250 })
+    });
+
+    return res.status(201).json('Meta creada correctamente');
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error al crear la meta' });
+  }
 }
