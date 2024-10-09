@@ -3,11 +3,11 @@ import NavBar from "../components/NavBar";
 
 function Root (){
   return(
-    <section className='flex h-screen w-full'>
+    <section className='flex h-screen w-full dark:bg-slate-800'>
       <NavBar />
-      <section className='w-8/12 p-2'>
+      <main className='w-10/12 p-2'>
         <Outlet />
-      </section>
+      </main>
     </section>
   )
 }

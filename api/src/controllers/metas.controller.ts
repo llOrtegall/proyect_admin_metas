@@ -1,20 +1,22 @@
 import { Request, Response } from 'express';
 import { Meta } from '../model/metas.model';
 import { fn, Op } from 'sequelize';
-import { fa, faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
+import { Sucursal } from '../model/sucursales.model';
+import { Hora } from '../model/hora.model';
 
 const productDefinitions = [
   { key: 'chance', name: 'Chance', metaKey: 'meta_dia_chance' },
-  { key: 'pagamas', name: 'Pagamás', metaKey: 'meta_dia_pagamas' },
+  { key: 'pagamas', name: 'Pagamas', metaKey: 'meta_dia_pagamas' },
   { key: 'pagatodo', name: 'PagaTodo', metaKey: 'meta_dia_pagatodo' },
   { key: 'doblechance', name: 'DobleChance', metaKey: 'meta_dia_doblechance' },
-  { key: 'chance_millonario', name: 'Chance Millonario', metaKey: 'meta_dia_chmill' },
+  { key: 'chance_millonario', name: 'ChanceMillonario', metaKey: 'meta_dia_chmill' },
   { key: 'astro', name: 'Astro', metaKey: 'meta_dia_astro' },
-  { key: 'loteria_fisica', name: 'Lotería Física', metaKey: 'meta_dia_lf' },
-  { key: 'loteria_virtual', name: 'Lotería Virtual', metaKey: 'meta_dia_lv' },
+  { key: 'loteria_fisica', name: 'LoteriaFisica', metaKey: 'meta_dia_lf' },
+  { key: 'loteria_virtual', name: 'LoteriaVirtual', metaKey: 'meta_dia_lv' },
   { key: 'betplay', name: 'BetPlay', metaKey: 'meta_dia_betplay' },
   { key: 'giros', name: 'Giros', metaKey: 'meta_dia_giros' },
-  { key: 'soat', name: 'SOAT', metaKey: 'meta_dia_soat' },
+  { key: 'soat', name: 'Baloto', metaKey: 'meta_dia_soat' },
   { key: 'recargas', name: 'Recargas', metaKey: 'meta_dia_recargas' }
 ];
 
@@ -102,6 +104,11 @@ function reduceProducts(results: Meta[]): ReduceType {
   }, initialReduce);
 }
 
+function calcularPorcentaje(vtaDia: number, metaDia: number): number {
+  const porcentaje = Math.min((vtaDia / metaDia) * 100, 100);
+  return parseFloat(porcentaje.toFixed(2));
+}
+
 export const getMetasController = async (req: Request, res: Response) => {
 
   try {
@@ -114,16 +121,19 @@ export const getMetasController = async (req: Request, res: Response) => {
 
     const reduce = reduceProducts(results);
     
-    const products = productDefinitions.map(product => ({
+    const products = productDefinitions.map((product, index) => ({
+      id: ++index,
       producto: product.name,
       vta_dia: reduce[product.key as keyof ReduceType],
-      meta_dia: reduce[product.metaKey as keyof ReduceType]
-    })).sort((a, b) => b.vta_dia - a.vta_dia);
+      meta_dia: reduce[product.metaKey as keyof ReduceType],
+      porcentaje: calcularPorcentaje(reduce[product.key as keyof ReduceType], reduce[product.metaKey as keyof ReduceType])
+    })).sort((a, b) => b.porcentaje - a.porcentaje);
 
     const metaTotalDiaChance = reduce.meta_dia_chance + reduce.meta_dia_pagamas + reduce.meta_dia_pagatodo + reduce.meta_dia_astro
     const ventaTotalDiaChance = reduce.chance + reduce.pagamas + reduce.pagatodo + reduce.astro
+    const porcentajeTotalDiaChance = calcularPorcentaje(ventaTotalDiaChance, metaTotalDiaChance);
 
-    return res.status(200).json({ productos: products, metaDia: metaTotalDiaChance, ventaDia: ventaTotalDiaChance });
+    return res.status(200).json({ productos: products, metaDia: metaTotalDiaChance, ventaDia: ventaTotalDiaChance, porcentaje: porcentajeTotalDiaChance });
   } catch (error) {
     return res.status(500).json({ message: 'Error al obtener las metas' });
   }
@@ -167,5 +177,92 @@ export const createMetaController = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Error al crear la meta' });
+  }
+}
+
+interface ProductosParserType {
+  Chance: string;
+  Pagamas: string;
+  PagaTodo: string;
+  DobleChance: string;
+  ChanceMillonario: string;
+  Astro: string;
+  LoteriaFisica: string;
+  LoteriaVirtual: string;
+  BetPlay: string;
+  Giros: string;
+  Baloto: string;
+  Recargas: string;
+}
+
+const ProductosParser: ProductosParserType = {
+  Chance: 'chance',
+  Pagamas: 'pagamas',
+  PagaTodo: 'pagatodo',
+  DobleChance: 'doblechance',
+  ChanceMillonario: 'chance_millonario',
+  Astro: 'astro',
+  LoteriaFisica: 'loteria_fisica',
+  LoteriaVirtual: 'loteria_virtual',
+  BetPlay: 'betplay',
+  Giros: 'giros',
+  Baloto: 'soat',
+  Recargas: 'recargas'
+}
+
+function returnProductKey(name: string): string {
+  return ProductosParser[name as keyof ProductosParserType];
+}
+
+export const getProductDetailController = async (req: Request, res: Response) => {
+  const { name } = req.params;
+
+  if(!name){
+    return res.status(400).json({ message: 'El nombre del producto es requerido' });  
+  }
+  
+  try {
+    const results = await Meta.findAll({
+      attributes: [['sucursal', 'codigo'], [returnProductKey(name), 'venta']],
+      where: {
+        fecha: { [Op.eq]: fn('CURDATE') },
+        zona: { [Op.eq]: 39627 }
+      },
+      include: [
+        {
+          model: Sucursal,
+          attributes: ['nombre', 'direccion', 'categoria', 'version'],
+        }
+      ],
+      order: [[returnProductKey(name), 'DESC']]
+    });
+
+    return res.status(200).json(results);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error al obtener el detalle del producto' });
+  }
+}
+
+export const getVentaHoraController = async (req: Request, res: Response) => {
+  const { codigo } = req.params;
+
+  if(!codigo){
+    return res.status(400).json({ message: 'El código de la sucursal es requerido' });  
+  }
+
+  try {
+    const result = await Hora.findAll({
+      attributes: ['id', 'hora', ['chance', 'venta']],
+      where: {
+        sucursal: { [Op.eq]: codigo },
+        fecha: { [Op.eq]: fn('CURDATE') }
+      }
+    })
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error al obtener la venta por hora' });
   }
 }

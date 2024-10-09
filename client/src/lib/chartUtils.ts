@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Tremor Raw chartColors [v0.1.0]
 
 export type ColorUtility = "bg" | "stroke" | "fill" | "text"
@@ -57,6 +58,42 @@ export const chartColors = {
     fill: "fill-fuchsia-500",
     text: "text-fuchsia-500",
   },
+  red: {
+    bg: "bg-red-500",
+    stroke: "stroke-red-500",
+    fill: "fill-red-500",
+    text: "text-red-500",
+  },
+  teal: {
+    bg: "bg-teal-500",
+    stroke: "stroke-teal-500",
+    fill: "fill-teal-500",
+    text: "text-teal-500",
+  },
+  indigo: {
+    bg: "bg-indigo-500",
+    stroke: "stroke-indigo-500",
+    fill: "fill-indigo-500",
+    text: "text-indigo-500",
+  },
+  orange: {
+    bg: "bg-orange-500",
+    stroke: "stroke-orange-500",
+    fill: "fill-orange-500",
+    text: "text-orange-500",
+  },
+  yellow: {
+    bg: "bg-yellow-500",
+    stroke: "stroke-yellow-500",
+    fill: "fill-yellow-500",
+    text: "text-yellow-500",
+  },
+  rose: {
+    bg: "bg-rose-500",
+    stroke: "stroke-rose-500",
+    fill: "fill-rose-500",
+    text: "text-rose-500",
+  }
 } as const satisfies {
   [color: string]: {
     [key in ColorUtility]: string
