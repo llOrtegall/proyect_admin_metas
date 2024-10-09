@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Table, TableBody, TableCaption, TableCell, TableFoot, TableHead, TableHeaderCell, TableRoot, TableRow } from "../components/Table";
+import { Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, TableRow } from "../components/Table";
 
 interface Product {
   codigo: number;
@@ -25,17 +25,16 @@ function ProductDetail() {
   }, [name]);
 
   return (
-    <section className='flex flex-col gap-1 text-black overflow-y-auto h-screen'>
-      <TableRoot>
+    <section className=''>
+      <div className="h-[92vh] overflow-y-auto">
         <Table>
-          <TableCaption>Grupo Empresarial Multired S.A. <span>@Tremor Components</span></TableCaption>
           <TableHead>
             <TableRow>
               <TableHeaderCell>Nombre</TableHeaderCell>
               <TableHeaderCell>Dirección</TableHeaderCell>
-              <TableHeaderCell>Sales ($)</TableHeaderCell>
-              <TableHeaderCell>Status</TableHeaderCell>
-              <TableHeaderCell>Categoria</TableHeaderCell>
+              <TableHeaderCell>Ventas ($)</TableHeaderCell>
+              <TableHeaderCell>Categoría</TableHeaderCell>
+              <TableHeaderCell>Versión</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -61,18 +60,20 @@ function ProductDetail() {
               </TableRow>
             ))}
           </TableBody>
-          <TableFoot>
-            <TableRow>
-              <TableHeaderCell colSpan={3} scope="row" className="text-right">$
-                {
-                  Intl.NumberFormat("es-CO").format(data.reduce((acc, item) => acc + item.venta, 0)).toString()
-                }
-              </TableHeaderCell>
-            </TableRow>
-          </TableFoot>
         </Table>
-      </TableRoot>
-
+      </div>
+      <Table>
+        <TableFoot>
+          <TableRow>
+            <TableCell>{data.length} Sucursales</TableCell>
+            <TableCell>Producto: <span className="pl-1">{name || 'undefined'}</span></TableCell>
+            <TableHeaderCell colSpan={2}>
+              Total:
+              <span className="pl-2">$ {Intl.NumberFormat("es-CO").format(data.reduce((acc, item) => acc + item.venta, 0)).toString()}</span>
+            </TableHeaderCell>
+          </TableRow>
+        </TableFoot>
+      </Table>
     </section>
   )
 }
