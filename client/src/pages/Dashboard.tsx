@@ -79,7 +79,7 @@ function Dashboard() {
       <div className='grid grid-cols-3 gap-1 text-black dark:text-gray-400'>
         {
           data.productos.map((p, index) => (
-            <Card key={index} className={`${determineColor(p.porcentaje)}`} onClick={() => navigate(`ProductDetail/${p.producto}`)}>
+            <Card key={index} className={`${determineColor(p.porcentaje)} hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer`} onClick={() => navigate(`ProductDetail/${p.producto}`)}>
               <p className='uppercase font-bold text-xl'>{p.producto}</p>
               <p>Venta:<span className='font-semibold dark:text-gray-200'> $ {Intl.NumberFormat('es-CO').format(p.vta_dia).toString()}</span></p>
               <p className=''>Aspiración: <span className='font-semibold dark:text-gray-200'>$ {Intl.NumberFormat('es-CO').format(p.meta_dia).toString()}</span></p>
