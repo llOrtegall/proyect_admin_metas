@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, TableRow } from "../components/Table";
 
 interface Product {
@@ -15,8 +15,10 @@ interface Product {
 }
 
 function ProductDetail() {
-  const { name } = useParams();
   const [data, setData] = useState<Product[]>([]);
+  const navigate = useNavigate();
+  const { name } = useParams();
+
 
   useEffect(() => {
     axios.get(`/product/${name}`)
@@ -39,7 +41,9 @@ function ProductDetail() {
           </TableHead>
           <TableBody>
             {data.map((item) => (
-              <TableRow key={item.codigo}>
+              <TableRow key={item.codigo} className={name === 'Chance' ? 'hover:bg-yellow-100 cursor-pointer' : ''}
+                onClick={() => name === 'Chance' ? navigate(`/ventaHora/${item.codigo}`) : ''}
+                >
                 {
                   item.Sucursal && (
                     <>

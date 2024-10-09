@@ -3,6 +3,7 @@ import { Meta } from '../model/metas.model';
 import { fn, Op } from 'sequelize';
 import { faker } from '@faker-js/faker';
 import { Sucursal } from '../model/sucursales.model';
+import { Hora } from '../model/hora.model';
 
 const productDefinitions = [
   { key: 'chance', name: 'Chance', metaKey: 'meta_dia_chance' },
@@ -240,5 +241,28 @@ export const getProductDetailController = async (req: Request, res: Response) =>
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Error al obtener el detalle del producto' });
+  }
+}
+
+export const getVentaHoraController = async (req: Request, res: Response) => {
+  const { codigo } = req.params;
+
+  if(!codigo){
+    return res.status(400).json({ message: 'El código de la sucursal es requerido' });  
+  }
+
+  try {
+    const result = await Hora.findAll({
+      attributes: ['id', 'hora', ['chance', 'venta']],
+      where: {
+        sucursal: { [Op.eq]: codigo },
+        fecha: { [Op.eq]: fn('CURDATE') }
+      }
+    })
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error al obtener la venta por hora' });
   }
 }
