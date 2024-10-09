@@ -102,6 +102,11 @@ function reduceProducts(results: Meta[]): ReduceType {
   }, initialReduce);
 }
 
+function calcularPorcentaje(vtaDia: number, metaDia: number): number {
+  const porcentaje = Math.min((vtaDia / metaDia) * 100, 100);
+  return parseFloat(porcentaje.toFixed(2));
+}
+
 export const getMetasController = async (req: Request, res: Response) => {
 
   try {
@@ -117,8 +122,9 @@ export const getMetasController = async (req: Request, res: Response) => {
     const products = productDefinitions.map(product => ({
       producto: product.name,
       vta_dia: reduce[product.key as keyof ReduceType],
-      meta_dia: reduce[product.metaKey as keyof ReduceType]
-    })).sort((a, b) => b.vta_dia - a.vta_dia);
+      meta_dia: reduce[product.metaKey as keyof ReduceType],
+      porcentaje: calcularPorcentaje(reduce[product.key as keyof ReduceType], reduce[product.metaKey as keyof ReduceType])
+    })).sort((a, b) => b.porcentaje - a.porcentaje);
 
     const metaTotalDiaChance = reduce.meta_dia_chance + reduce.meta_dia_pagamas + reduce.meta_dia_pagatodo + reduce.meta_dia_astro
     const ventaTotalDiaChance = reduce.chance + reduce.pagamas + reduce.pagatodo + reduce.astro

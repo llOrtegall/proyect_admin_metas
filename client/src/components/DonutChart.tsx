@@ -1,7 +1,7 @@
 // Tremor DonutChart [v0.0.1]
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {  AvailableChartColors,  AvailableChartColorsKeys,  constructCategoryColors,  getColorClassName,} from "../lib/chartUtils"
-import {  Pie,  PieChart as ReChartsDonutChart,  ResponsiveContainer,  Sector,  Tooltip,} from "recharts"
+import { AvailableChartColors, AvailableChartColorsKeys, constructCategoryColors, getColorClassName, } from "../lib/chartUtils"
+import { Pie, PieChart as ReChartsDonutChart, ResponsiveContainer, Sector, Tooltip, } from "recharts"
 import { forwardRef, useState, useRef } from "react"
 import { cx } from "../lib/utils"
 
@@ -205,32 +205,18 @@ const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
     }
 
     return (
-      <div
-        ref={forwardedRef}
-        className={cx("h-40 w-40", className)}
-        tremor-id="tremor-raw"
-        {...other}
-      >
+      <div ref={forwardedRef} className={cx("h-40 w-40", className)} tremor-id="tremor-raw"        {...other}      >
         <ResponsiveContainer className="size-full">
           <ReChartsDonutChart
-            onClick={
-              onValueChange && activeIndex !== undefined
-                ? () => {
-                    setActiveIndex(undefined)
-                    onValueChange(null)
-                  }
-                : undefined
-            }
-            margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
-          >
+            onClick={onValueChange && activeIndex !== undefined
+              ? () => {
+                setActiveIndex(undefined)
+                onValueChange(null)
+              }
+              : undefined
+            } margin={{ top: 0, left: 0, right: 0, bottom: 0 }} >
             {showLabel && isDonut && (
-              <text
-                className="fill-gray-700 dark:fill-gray-300"
-                x="50%"
-                y="50%"
-                textAnchor="middle"
-                dominantBaseline="middle"
-              >
+              <text className="fill-gray-700 dark:fill-gray-300" x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" >
                 {parsedLabelInput}
               </text>
             )}
@@ -263,12 +249,12 @@ const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
                 content={({ active, payload }) => {
                   const cleanPayload = payload
                     ? payload.map((item: any) => ({
-                        category: item.payload[category],
-                        value: item.value,
-                        color: categoryColors.get(
-                          item.payload[category],
-                        ) as AvailableChartColorsKeys,
-                      }))
+                      category: item.payload[category],
+                      value: item.value,
+                      color: categoryColors.get(
+                        item.payload[category],
+                      ) as AvailableChartColorsKeys,
+                    }))
                     : []
 
                   const payloadCategory: string = cleanPayload[0]?.category

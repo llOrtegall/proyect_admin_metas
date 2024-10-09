@@ -5,7 +5,7 @@ function Root (){
   return(
     <section className='flex h-screen w-full'>
       <NavBar />
-      <section className='w-8/12 p-2'>
+      <section className='w-10/12 p-2'>
         <Outlet />
       </section>
     </section>
