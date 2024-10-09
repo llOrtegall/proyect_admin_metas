@@ -5,6 +5,7 @@ import { Card } from '../components/Card';
 import axios from 'axios';
 import { Callout } from '../components/Callout';
 import { ProgressCircle } from '../components/ProgressCircle';
+import { useNavigate } from 'react-router-dom';
 
 interface Products {
   producto: string
@@ -29,14 +30,21 @@ function determineColor(porcentaje: number) {
 
 function Dashboard() {
   const [data, setData] = useState<Response>({ productos: [], metaDia: 0, ventaDia: 0, porcentaje: 0 })
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/metas')
-      .then(res => {
-        setData(res.data)
-      })
-      .catch(err => console.error(err))
-  }, [])
+    const fetchData = () => {
+      axios.get('/metas')
+        .then(res => {
+          setData(res.data);
+        })
+        .catch(err => console.error(err));
+    };
+
+    fetchData(); // Fetch data immediately on mount
+    const intervalId = setInterval(fetchData, 5 * 60 * 1000); // Fetch data every 5 minutes
+    return () => clearInterval(intervalId); // Cleanup interval on unmount
+  }, []);
 
   return (
     <>
@@ -71,7 +79,7 @@ function Dashboard() {
       <div className='grid grid-cols-3 gap-1 text-black dark:text-gray-400'>
         {
           data.productos.map((p, index) => (
-            <Card key={index} className={`${determineColor(p.porcentaje)}`}>
+            <Card key={index} className={`${determineColor(p.porcentaje)}`} onClick={() => navigate(`ProductDetail/${p.producto}`)}>
               <p className='uppercase font-bold text-xl'>{p.producto}</p>
               <p>Venta:<span className='font-semibold dark:text-gray-200'> $ {Intl.NumberFormat('es-CO').format(p.vta_dia).toString()}</span></p>
               <p className=''>Aspiración: <span className='font-semibold dark:text-gray-200'>$ {Intl.NumberFormat('es-CO').format(p.meta_dia).toString()}</span></p>

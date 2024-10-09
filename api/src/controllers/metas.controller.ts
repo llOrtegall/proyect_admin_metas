@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 import { Meta } from '../model/metas.model';
 import { fn, Op } from 'sequelize';
-import { fa, faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 const productDefinitions = [
   { key: 'chance', name: 'Chance', metaKey: 'meta_dia_chance' },
-  { key: 'pagamas', name: 'Pagamás', metaKey: 'meta_dia_pagamas' },
+  { key: 'pagamas', name: 'Pagamas', metaKey: 'meta_dia_pagamas' },
   { key: 'pagatodo', name: 'PagaTodo', metaKey: 'meta_dia_pagatodo' },
   { key: 'doblechance', name: 'DobleChance', metaKey: 'meta_dia_doblechance' },
-  { key: 'chance_millonario', name: 'Chance Millonario', metaKey: 'meta_dia_chmill' },
+  { key: 'chance_millonario', name: 'ChanceMillonario', metaKey: 'meta_dia_chmill' },
   { key: 'astro', name: 'Astro', metaKey: 'meta_dia_astro' },
-  { key: 'loteria_fisica', name: 'Lotería Física', metaKey: 'meta_dia_lf' },
-  { key: 'loteria_virtual', name: 'Lotería Virtual', metaKey: 'meta_dia_lv' },
+  { key: 'loteria_fisica', name: 'LoteriaFisica', metaKey: 'meta_dia_lf' },
+  { key: 'loteria_virtual', name: 'LoteriaVirtual', metaKey: 'meta_dia_lv' },
   { key: 'betplay', name: 'BetPlay', metaKey: 'meta_dia_betplay' },
   { key: 'giros', name: 'Giros', metaKey: 'meta_dia_giros' },
-  { key: 'soat', name: 'SOAT', metaKey: 'meta_dia_soat' },
+  { key: 'soat', name: 'Baloto', metaKey: 'meta_dia_soat' },
   { key: 'recargas', name: 'Recargas', metaKey: 'meta_dia_recargas' }
 ];
 
@@ -119,7 +119,8 @@ export const getMetasController = async (req: Request, res: Response) => {
 
     const reduce = reduceProducts(results);
     
-    const products = productDefinitions.map(product => ({
+    const products = productDefinitions.map((product, index) => ({
+      id: ++index,
       producto: product.name,
       vta_dia: reduce[product.key as keyof ReduceType],
       meta_dia: reduce[product.metaKey as keyof ReduceType],
