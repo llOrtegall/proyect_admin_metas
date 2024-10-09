@@ -1,42 +1,37 @@
-import { DonutChart } from "./components/DonutChart"
+import { DonutChart } from './components/DonutChart'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-const chartdata = [
-  {
-    name: "SolarCells",
-    amount: 4890,
-  },
-  {
-    name: "Glass",
-    amount: 2103,
-  },
-  {
-    name: "JunctionBox",
-    amount: 2050,
-  },
-  {
-    name: "Adhesive",
-    amount: 1300,
-  },
-  {
-    name: "BackSheet",
-    amount: 1100,
-  },
-  {
-    name: "Frame",
-    amount: 700,
-  },
-  {
-    name: "Encapsulant",
-    amount: 200,
-  },
-]
+interface Products {
+  producto: string
+  vta_dia: number
+  meta_dia: number
+}
+
+interface Response {
+  productos: Products[]
+  metaDia: number
+  ventaDia: number
+}
 
 function App() {
+  const [data, setData] = useState<Response>({ productos: [], metaDia: 0, ventaDia: 0 })
+
+  useEffect(() => {
+    axios.get('/metas')
+      .then(res => {
+        setData(res.data)
+      })
+      .catch(err => console.error(err))
+  }, [])
+
   return (
     <section className='h-screen w-screen flex items-center justify-center'>
-      <DonutChart className="w-96 h-96" data={chartdata} category="name" value="amount" showLabel={true}
-        valueFormatter={(number: number) => `$${Intl.NumberFormat("us").format(number).toString()}`}
-      />
+
+      <DonutChart className='w-96 h-96' data={data.productos} category='producto' value='vta_dia' showLabel={true}
+        valueFormatter={() => `$${Intl.NumberFormat('CO').format(data.ventaDia).toString()}`}
+        />
+
     </section>
   )
 }

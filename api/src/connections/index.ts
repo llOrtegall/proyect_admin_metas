@@ -9,7 +9,8 @@ const database = process.env.DB_METAS_DATABASE!;
 const con_db = new Sequelize(database, user, pass, {
   host: host,
   port: parseInt(port),
-  dialect: 'mariadb'
+  dialect: 'mysql',
+  timezone: '-05:00'
 });
 
 export { con_db }
