@@ -1,11 +1,13 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import { connPoweBi } from '../connections/powerbi';
+import { con_db } from '../connections';
 
 interface SucursalAttributes {
   zona: string;
   codigo: string;
   nombre: string;
   direccion: string;
+  categoria: string;
+  version: string;
 }
 
 type SucursalCreationAttributes = Optional<SucursalAttributes, 'codigo'>;
@@ -21,9 +23,11 @@ Sucursal.init({
   zona: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
   codigo: { type: DataTypes.STRING, allowNull: false },
   nombre: { type: DataTypes.STRING, allowNull: false },
-  direccion: { type: DataTypes.STRING, allowNull: false }
+  direccion: { type: DataTypes.STRING, allowNull: false },
+  categoria: { type: DataTypes.STRING, allowNull: false },
+  version: { type: DataTypes.STRING, allowNull: false }
 }, {
-  sequelize: connPoweBi,
-  tableName: 'SUCURSALES',
+  sequelize: con_db,
+  tableName: 'INFORMACION_PUNTOSVENTA',
   timestamps: false
 });

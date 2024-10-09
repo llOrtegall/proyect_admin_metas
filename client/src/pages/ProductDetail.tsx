@@ -1,21 +1,32 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+interface Product {
+  codigo: number;
+  venta: number;
+  Sucursal: {
+    nombre: string;
+    direccion: string;
+    categoria: string;
+    version: string;
+  }
+}
 
 function ProductDetail () {
   const { name } = useParams();
+  const [data, setData] = useState<Product[]>([]);
 
   useEffect(() => {
     axios.get(`/product/${name}`)
-      .then(res => console.log(res.data))
+      .then(res => setData(res.data))
       .catch(err => console.error(err));
-  }, [name]);
-
+  }, [name]);  
 
   return (
-    <div>
-      <h1>Product Detail</h1>
-    </div>
+    <section className='flex flex-col gap-1 text-black'>
+      
+    </section>
   )
 }
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Meta } from '../model/metas.model';
 import { fn, Op } from 'sequelize';
 import { faker } from '@faker-js/faker';
+import { Sucursal } from '../model/sucursales.model';
 
 const productDefinitions = [
   { key: 'chance', name: 'Chance', metaKey: 'meta_dia_chance' },
@@ -178,20 +179,64 @@ export const createMetaController = async (req: Request, res: Response) => {
   }
 }
 
+interface ProductosParserType {
+  Chance: string;
+  Pagamas: string;
+  PagaTodo: string;
+  DobleChance: string;
+  ChanceMillonario: string;
+  Astro: string;
+  LoteriaFisica: string;
+  LoteriaVirtual: string;
+  BetPlay: string;
+  Giros: string;
+  Baloto: string;
+  Recargas: string;
+}
+
+const ProductosParser: ProductosParserType = {
+  Chance: 'chance',
+  Pagamas: 'pagamas',
+  PagaTodo: 'pagatodo',
+  DobleChance: 'doblechance',
+  ChanceMillonario: 'chance_millonario',
+  Astro: 'astro',
+  LoteriaFisica: 'loteria_fisica',
+  LoteriaVirtual: 'loteria_virtual',
+  BetPlay: 'betplay',
+  Giros: 'giros',
+  Baloto: 'soat',
+  Recargas: 'recargas'
+}
+
+function returnProductKey(name: string): string {
+  return ProductosParser[name as keyof ProductosParserType];
+}
+
 export const getProductDetailController = async (req: Request, res: Response) => {
   const { name } = req.params;
-  console.log(name);
+
+  if(!name){
+    return res.status(400).json({ message: 'El nombre del producto es requerido' });  
+  }
   
   try {
     const results = await Meta.findAll({
-      attributes: ['sucursal', 'pagamas'],
+      attributes: [['sucursal', 'codigo'], [returnProductKey(name), 'venta']],
       where: {
         fecha: { [Op.eq]: fn('CURDATE') },
         zona: { [Op.eq]: 39627 }
-      }
+      },
+      include: [
+        {
+          model: Sucursal,
+          attributes: ['nombre', 'direccion', 'categoria', 'version'],
+        }
+      ],
+      order: [[returnProductKey(name), 'DESC']]
     });
 
-    return res.status(200).json(results.sort((a, b) => b.pagamas - a.pagamas));
+    return res.status(200).json(results);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Error al obtener el detalle del producto' });
