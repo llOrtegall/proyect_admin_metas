@@ -128,8 +128,9 @@ export const getMetasController = async (req: Request, res: Response) => {
 
     const metaTotalDiaChance = reduce.meta_dia_chance + reduce.meta_dia_pagamas + reduce.meta_dia_pagatodo + reduce.meta_dia_astro
     const ventaTotalDiaChance = reduce.chance + reduce.pagamas + reduce.pagatodo + reduce.astro
+    const porcentajeTotalDiaChance = calcularPorcentaje(ventaTotalDiaChance, metaTotalDiaChance);
 
-    return res.status(200).json({ productos: products, metaDia: metaTotalDiaChance, ventaDia: ventaTotalDiaChance });
+    return res.status(200).json({ productos: products, metaDia: metaTotalDiaChance, ventaDia: ventaTotalDiaChance, porcentaje: porcentajeTotalDiaChance });
   } catch (error) {
     return res.status(500).json({ message: 'Error al obtener las metas' });
   }

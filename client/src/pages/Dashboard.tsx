@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Card } from '../components/Card';
 import axios from 'axios';
 import { Callout } from '../components/Callout';
+import { ProgressCircle } from '../components/ProgressCircle';
 
 interface Products {
   producto: string
@@ -16,6 +17,7 @@ interface Response {
   productos: Products[]
   metaDia: number
   ventaDia: number
+  porcentaje: number
 }
 
 function determineColor(porcentaje: number) {
@@ -26,7 +28,7 @@ function determineColor(porcentaje: number) {
 }
 
 function Dashboard() {
-  const [data, setData] = useState<Response>({ productos: [], metaDia: 0, ventaDia: 0 })
+  const [data, setData] = useState<Response>({ productos: [], metaDia: 0, ventaDia: 0, porcentaje: 0 })
 
   useEffect(() => {
     axios.get('/metas')
@@ -44,13 +46,22 @@ function Dashboard() {
             valueFormatter={(number: number) => `$${Intl.NumberFormat("us").format(number).toString()}`}
             colors={['emerald', 'blue', 'cyan', 'lime', 'fuchsia', 'gray', 'red', 'pink', 'amber', 'violet', 'yellow', 'indigo']}
           />
-          <div className=''>
+          <div className='flex flex-col gap-1'>
             <Callout title='Meta Chance Del día' variant='success'>
-              <p className='text-2xl text-center'>${Intl.NumberFormat('es-CO').format(data.metaDia).toString()}</p>
+              <p className='text-xl text-center'>${Intl.NumberFormat('es-CO').format(data.metaDia).toString()}</p>
             </Callout>
-            <Callout title='Venta Actual Del día' variant='error'>
-              <p className='text-2xl text-center'>${Intl.NumberFormat('es-CO').format(data.ventaDia).toString()}</p>
+            <Callout title='Venta Actual Del día' variant={data.metaDia >= data.ventaDia ? 'error' : 'success'}>
+              <p className='text-xl text-center'>${Intl.NumberFormat('es-CO').format(data.ventaDia).toString()}</p>
             </Callout>
+          </div>
+
+          <div className='flex flex-col items-center justify-center gap-1'>
+            <ProgressCircle value={data.ventaDia} max={data.metaDia} radius={60} strokeWidth={10} >
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                {data.porcentaje} %
+              </span>
+            </ProgressCircle>
+            <p className='text-black text-center'>Porcentaje Cumplimiento <br /> Multired - Chance</p>
           </div>
         </Card>
         <Card>
@@ -61,9 +72,9 @@ function Dashboard() {
         {
           data.productos.map((p, index) => (
             <Card key={index} className={`${determineColor(p.porcentaje)}`}>
-              <p className='uppercase font-bold text-xl pb-1'>{p.producto}</p>
+              <p className='uppercase font-bold text-xl'>{p.producto}</p>
               <p>Venta:<span className='font-semibold dark:text-gray-200'> $ {Intl.NumberFormat('es-CO').format(p.vta_dia).toString()}</span></p>
-              <p className='pb-3'>Aspiración: <span className='font-semibold dark:text-gray-200'>$ {Intl.NumberFormat('es-CO').format(p.meta_dia).toString()}</span></p>
+              <p className=''>Aspiración: <span className='font-semibold dark:text-gray-200'>$ {Intl.NumberFormat('es-CO').format(p.meta_dia).toString()}</span></p>
 
               <div className='flex flex-1 gap-2'>
                 <ProgressBar value={p.porcentaje} variant={p.porcentaje <= 20 ? 'error' : p.porcentaje <= 70 ? 'warning' : p.porcentaje <= 90 ? 'default' : 'success'} />
