@@ -1,9 +1,17 @@
 import { RouterProvider } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
-import router from './routes/index.tsx'
 import { StrictMode } from 'react'
 
 import './index.css'
 
-createRoot(document.getElementById('root')!).render(<StrictMode><RouterProvider router={router} /></StrictMode>)
+import axios from 'axios'
+import Router from './routes'
 
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL!
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <RouterProvider router={Router} />
+  </StrictMode>,
+)
