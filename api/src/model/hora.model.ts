@@ -12,6 +12,8 @@ interface HoraAttributes {
   astro: number;
   createdAt?: Date;
   updatedAt?: Date;
+  asp?: number;
+  venta?: number;
 }
 
 type HoraCreationAttributes = Optional<HoraAttributes, 'id' | 'createdAt' | 'updatedAt'>;
@@ -38,7 +40,7 @@ Hora.init({
   hora: { type: DataTypes.DATE, allowNull: false },
   chance: { type: DataTypes.INTEGER, allowNull: false },
   gane5: { type: DataTypes.INTEGER, allowNull: false },
-  astro: { type: DataTypes.INTEGER, allowNull: false }
+  astro: { type: DataTypes.INTEGER, allowNull: false },
 }, {
   sequelize: horaConnection,
   tableName: 'Meta'
