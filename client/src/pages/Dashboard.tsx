@@ -17,6 +17,13 @@ interface Response {
   ventaDia: number
 }
 
+function determineColor(porcentaje: number) {
+  if (porcentaje <= 20) return 'bg-red-50'
+  if (porcentaje <= 70) return 'bg-yellow-50'
+  if (porcentaje <= 90) return 'bg-blue-50'
+  return 'bg-green-100'
+}
+
 function Dashboard() {
   const [data, setData] = useState<Response>({ productos: [], metaDia: 0, ventaDia: 0 })
 
@@ -32,7 +39,7 @@ function Dashboard() {
     <>
       <div className='flex gap-1 mb-1'>
         <Card>
-          <DonutChart className='' data={data.productos} category='producto' value='vta_dia' showLabel={true} 
+          <DonutChart className='' data={data.productos} category='producto' value='vta_dia' showLabel={true}
             valueFormatter={(number: number) =>
               `$${Intl.NumberFormat("us").format(number).toString()}`
             } />
@@ -41,16 +48,18 @@ function Dashboard() {
           test
         </Card>
       </div>
-      <div className='grid grid-cols-3 gap-1 text-gray-400'>
+      <div className='grid grid-cols-3 gap-1 text-black dark:text-gray-400'>
         {
           data.productos.map((p, index) => (
-            <Card key={index}>
-              <p className='text-center uppercase font-bold text-xl '>{p.producto}</p>
-              <p>Venta:<span className='font-semibold text-gray-200'> $ {Intl.NumberFormat('es-CO').format(p.vta_dia).toString()}</span></p>
-              <p className='pb-3'>Aspiración: <span className='font-semibold text-gray-200'>$ {Intl.NumberFormat('es-CO').format(p.meta_dia).toString()}</span></p>
+            <Card key={index} className={`${determineColor(p.porcentaje)}`}>
+              <p className='uppercase font-bold text-xl pb-1'>{p.producto}</p>
+              <p>Venta:<span className='font-semibold dark:text-gray-200'> $ {Intl.NumberFormat('es-CO').format(p.vta_dia).toString()}</span></p>
+              <p className='pb-3'>Aspiración: <span className='font-semibold dark:text-gray-200'>$ {Intl.NumberFormat('es-CO').format(p.meta_dia).toString()}</span></p>
 
-              <p className='text-center py-1'>{p.porcentaje} %</p>
-              <ProgressBar value={p.porcentaje} variant={p.porcentaje <= 20 ? 'error' : p.porcentaje <= 70 ? 'warning' : p.porcentaje <= 90 ? 'default' : 'success'} />
+              <div className='flex flex-1 gap-2'>
+                <ProgressBar value={p.porcentaje} variant={p.porcentaje <= 20 ? 'error' : p.porcentaje <= 70 ? 'warning' : p.porcentaje <= 90 ? 'default' : 'success'} />
+                <p className='text-center py-1 text-nowrap'>{p.porcentaje} %</p>
+              </div>
             </Card>
           ))
         }
