@@ -32,8 +32,10 @@ function Dashboard() {
     <>
       <div className='flex gap-1 mb-1'>
         <Card>
-          <DonutChart className='' data={data.productos} category='producto' value='vta_dia' showLabel={true}
-            valueFormatter={() => `$${Intl.NumberFormat('es-CO').format(data.ventaDia).toString()}`} />
+          <DonutChart className='' data={data.productos} category='producto' value='vta_dia' showLabel={true} 
+            valueFormatter={(number: number) =>
+              `$${Intl.NumberFormat("us").format(number).toString()}`
+            } />
         </Card>
         <Card>
           test

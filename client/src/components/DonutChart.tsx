@@ -62,8 +62,7 @@ const ChartTooltip = ({
           "border-gray-200 dark:border-gray-800",
           // background color
           "bg-white dark:bg-gray-950",
-        )}
-      >
+        )}>
         <div className={cx("space-y-1 px-4 py-2")}>
           {payload.map(({ value, category, color }, index) => (
             <div key={`id-${index}`} className="flex items-center justify-between space-x-8" >
@@ -205,7 +204,7 @@ const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
     }
 
     return (
-      <div ref={forwardedRef} className={cx("h-40 w-40", className)} tremor-id="tremor-raw"        {...other}      >
+      <div ref={forwardedRef} className={cx("h-40 w-40", className)} tremor-id="tremor-raw" {...other} >
         <ResponsiveContainer className="size-full">
           <ReChartsDonutChart
             onClick={onValueChange && activeIndex !== undefined
@@ -256,9 +255,7 @@ const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
                       ) as AvailableChartColorsKeys,
                     }))
                     : []
-
                   const payloadCategory: string = cleanPayload[0]?.category
-
                   if (
                     tooltipCallback &&
                     (active !== prevActiveRef.current ||
@@ -271,7 +268,6 @@ const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
                     prevActiveRef.current = active
                     prevCategoryRef.current = payloadCategory
                   }
-
                   return showTooltip && active ? (
                     CustomTooltip ? (
                       <CustomTooltip active={active} payload={cleanPayload} />

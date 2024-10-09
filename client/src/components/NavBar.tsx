@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { RiHome2Line, RiMenu2Line } from '@remixicon/react'
 import { Card } from "./Card";
+import ThemeToggle from "./ThemeToggle";
 
 function NavBar() {
   return (
-    <nav className="bg-slate-900 w-2/12 border-r border-slate-600">
+    <nav className="bg-slate-200 dark:bg-gray-900 w-2/12 border-r border-slate-600">
       <figure className="px-2 py-2 mb-2">
         <Card className="flex items-center gap-2 hover:bg-indigo-700/20 cursor-pointer transition-all">
           <span className="bg-indigo-900 py-2 px-3 rounded-md">GE</span>
@@ -24,6 +25,9 @@ function NavBar() {
             <span>Detalles</span>
           </NavLink>
         </li>
+      </ul>
+      <ul>
+        <ThemeToggle />
       </ul>
     </nav>
   );
