@@ -1,16 +1,14 @@
 import { Outlet } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 function Root (){
   return(
-    <div>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/dashboard">Dashboard</a></li>
-        </ul>
-      </nav>
-      <Outlet />
-    </div>
+    <section className='flex h-screen w-full'>
+      <NavBar />
+      <section className='w-8/12'>
+        <Outlet />
+      </section>
+    </section>
   )
 }
 

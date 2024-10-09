@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { DonutChart } from "../components/DonutChart";
-import axios from "axios";
+import { DonutChart } from '../components/DonutChart';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface Products {
   producto: string

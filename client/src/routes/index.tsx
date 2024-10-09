@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import Root from './Root';
-import Dashboard from '../pages/Dashboar';
+import Dashboard from '../pages/Dashboard';
 
 const Router = createBrowserRouter([
   {
