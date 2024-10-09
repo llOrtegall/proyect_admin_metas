@@ -1,4 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
+import { Sucursal } from './sucursales.model';
 import { con_db } from '../connections'
 
 
@@ -97,3 +98,5 @@ Meta.init({
   tableName: 'METASPRODUCTOS',
   timestamps: false
 });
+
+Meta.hasOne(Sucursal, { foreignKey: 'codigo', sourceKey: 'sucursal' });

@@ -177,3 +177,23 @@ export const createMetaController = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Error al crear la meta' });
   }
 }
+
+export const getProductDetailController = async (req: Request, res: Response) => {
+  const { name } = req.params;
+  console.log(name);
+  
+  try {
+    const results = await Meta.findAll({
+      attributes: ['sucursal', 'pagamas'],
+      where: {
+        fecha: { [Op.eq]: fn('CURDATE') },
+        zona: { [Op.eq]: 39627 }
+      }
+    });
+
+    return res.status(200).json(results.sort((a, b) => b.pagamas - a.pagamas));
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error al obtener el detalle del producto' });
+  }
+}
