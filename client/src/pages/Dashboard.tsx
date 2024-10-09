@@ -3,6 +3,7 @@ import { DonutChart } from '../components/DonutChart';
 import { useEffect, useState } from 'react';
 import { Card } from '../components/Card';
 import axios from 'axios';
+import { Callout } from '../components/Callout';
 
 interface Products {
   producto: string
@@ -38,11 +39,19 @@ function Dashboard() {
   return (
     <>
       <div className='flex gap-1 mb-1'>
-        <Card>
+        <Card className='flex justify-around'>
           <DonutChart className='' data={data.productos} category='producto' value='vta_dia' showLabel={true}
-            valueFormatter={(number: number) =>
-              `$${Intl.NumberFormat("us").format(number).toString()}`
-            } />
+            valueFormatter={(number: number) => `$${Intl.NumberFormat("us").format(number).toString()}`}
+            colors={['emerald', 'blue', 'cyan', 'lime', 'fuchsia', 'gray', 'red', 'pink', 'amber', 'violet', 'yellow', 'indigo']}
+          />
+          <div className=''>
+            <Callout title='Meta Chance Del día' variant='success'>
+              <p className='text-2xl text-center'>${Intl.NumberFormat('es-CO').format(data.metaDia).toString()}</p>
+            </Callout>
+            <Callout title='Venta Actual Del día' variant='error'>
+              <p className='text-2xl text-center'>${Intl.NumberFormat('es-CO').format(data.ventaDia).toString()}</p>
+            </Callout>
+          </div>
         </Card>
         <Card>
           test
