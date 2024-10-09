@@ -31,21 +31,12 @@ const chartdata = [
   },
 ]
 
-
 function App() {
   return (
     <section className='h-screen w-screen flex items-center justify-center'>
-      <DonutChart
-        className="mx-auto"
-        data={chartdata}
-        category="name"
-        value="amount"
-        showLabel={true}
-        valueFormatter={(number: number) =>
-          `$${Intl.NumberFormat("us").format(number).toString()}`
-        }
+      <DonutChart className="w-96 h-96" data={chartdata} category="name" value="amount" showLabel={true}
+        valueFormatter={(number: number) => `$${Intl.NumberFormat("us").format(number).toString()}`}
       />
-
     </section>
   )
 }

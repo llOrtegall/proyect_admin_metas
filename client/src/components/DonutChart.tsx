@@ -1,23 +1,8 @@
 // Tremor DonutChart [v0.0.1]
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-"use client"
-
-import React from "react"
-import {
-  Pie,
-  PieChart as ReChartsDonutChart,
-  ResponsiveContainer,
-  Sector,
-  Tooltip,
-} from "recharts"
-
-import {
-  AvailableChartColors,
-  AvailableChartColorsKeys,
-  constructCategoryColors,
-  getColorClassName,
-} from "../lib/chartUtils"
+import {  AvailableChartColors,  AvailableChartColorsKeys,  constructCategoryColors,  getColorClassName,} from "../lib/chartUtils"
+import {  Pie,  PieChart as ReChartsDonutChart,  ResponsiveContainer,  Sector,  Tooltip,} from "recharts"
+import { forwardRef, useState, useRef } from "react"
 import { cx } from "../lib/utils"
 
 const sumNumericArray = (arr: number[]): number =>
@@ -48,7 +33,6 @@ const parseLabelInput = (
 ): string => labelInput || valueFormatter(calculateDefaultLabel(data, valueKey))
 
 //#region Tooltip
-
 type TooltipProps = Pick<ChartTooltipProps, "active" | "payload">
 
 type PayloadItem = {
@@ -82,10 +66,7 @@ const ChartTooltip = ({
       >
         <div className={cx("space-y-1 px-4 py-2")}>
           {payload.map(({ value, category, color }, index) => (
-            <div
-              key={`id-${index}`}
-              className="flex items-center justify-between space-x-8"
-            >
+            <div key={`id-${index}`} className="flex items-center justify-between space-x-8" >
               <div className="flex items-center space-x-2">
                 <span
                   aria-hidden="true"
@@ -169,7 +150,7 @@ interface DonutChartProps extends React.HTMLAttributes<HTMLDivElement> {
   customTooltip?: React.ComponentType<TooltipProps>
 }
 
-const DonutChart = React.forwardRef<HTMLDivElement, DonutChartProps>(
+const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
   (
     {
       data = [],
@@ -190,7 +171,7 @@ const DonutChart = React.forwardRef<HTMLDivElement, DonutChartProps>(
     forwardedRef,
   ) => {
     const CustomTooltip = customTooltip
-    const [activeIndex, setActiveIndex] = React.useState<number | undefined>(
+    const [activeIndex, setActiveIndex] = useState<number | undefined>(
       undefined,
     )
     const isDonut = variant === "donut"
@@ -199,8 +180,8 @@ const DonutChart = React.forwardRef<HTMLDivElement, DonutChartProps>(
     const categories = Array.from(new Set(data.map((item) => item[category])))
     const categoryColors = constructCategoryColors(categories, colors)
 
-    const prevActiveRef = React.useRef<boolean | undefined>(undefined)
-    const prevCategoryRef = React.useRef<string | undefined>(undefined)
+    const prevActiveRef = useRef<boolean | undefined>(undefined)
+    const prevCategoryRef = useRef<string | undefined>(undefined)
 
     const handleShapeClick = (
       data: any,
