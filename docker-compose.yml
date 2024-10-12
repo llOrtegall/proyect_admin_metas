@@ -11,7 +11,7 @@ services:
       - ./client/dist:/usr/share/nginx/html
 
   api_adm_metas:
-    build: ./server
+    build: ./api
     restart: always
     ports:
       - "4000:4000"
