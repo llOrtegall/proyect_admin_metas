@@ -1,4 +1,4 @@
-import { RiHome2Line, RiMenu2Line } from '@remixicon/react'
+import { RiHome2Line, RiMenu2Line, RiFileChartLine } from '@remixicon/react'
 import { NavLink } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import { Card } from './Card';
@@ -17,6 +17,12 @@ function NavBar() {
           <NavLink to='/' className={({ isActive }) => isActive ? 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
             <RiHome2Line />
             <span>Dashboard</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='Sugeridos' className={({ isActive }) => isActive ? 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
+            <RiFileChartLine />
+            <span>Sugeridos</span>
           </NavLink>
         </li>
         <li>

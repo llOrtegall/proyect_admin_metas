@@ -120,7 +120,7 @@ export const getMetasController = async (req: Request, res: Response) => {
     })
 
     const reduce = reduceProducts(results);
-    
+
     const products = productDefinitions.map((product, index) => ({
       id: ++index,
       producto: product.name,
@@ -217,10 +217,10 @@ function returnProductKey(name: string): string {
 export const getProductDetailController = async (req: Request, res: Response) => {
   const { name } = req.params;
 
-  if(!name){
-    return res.status(400).json({ message: 'El nombre del producto es requerido' });  
+  if (!name) {
+    return res.status(400).json({ message: 'El nombre del producto es requerido' });
   }
-  
+
   try {
     const results = await Meta.findAll({
       attributes: [['sucursal', 'codigo'], [returnProductKey(name), 'venta']],
@@ -244,11 +244,38 @@ export const getProductDetailController = async (req: Request, res: Response) =>
   }
 }
 
+interface VentaHora {
+  id: number;
+  hora: string;
+  venta: number | null;
+  asp: number;
+}
+
+const baseHora: VentaHora[] = [
+  { id: 1, hora: '06:00:00', venta: 0, asp: 0 },
+  { id: 2, hora: '07:00:00', venta: 0, asp: 10000 },
+  { id: 3, hora: '08:00:00', venta: 0, asp: 63000 },
+  { id: 4, hora: '09:00:00', venta: 0, asp: 100000 },
+  { id: 5, hora: '10:00:00', venta: 0, asp: 220000 },
+  { id: 6, hora: '11:00:00', venta: 0, asp: 450000 },
+  { id: 7, hora: '12:00:00', venta: 0, asp: 500000 },
+  { id: 8, hora: '13:00:00', venta: 0, asp: 450000 },
+  { id: 9, hora: '14:00:00', venta: 0, asp: 320000 },
+  { id: 10, hora: '15:00:00', venta: 0, asp: 120000 },
+  { id: 11, hora: '16:00:00', venta: 0, asp: 80000 },
+  { id: 12, hora: '17:00:00', venta: 0, asp: 40000 },
+  { id: 13, hora: '18:00:00', venta: 0, asp: 20000 },
+  { id: 14, hora: '19:00:00', venta: 0, asp: 10000 },
+  { id: 15, hora: '20:00:00', venta: 0, asp: 2000 },
+  { id: 16, hora: '21:00:00', venta: 0, asp: 1000 },
+  { id: 17, hora: '22:00:00', venta: 0, asp: 0 }
+];
+
 export const getVentaHoraController = async (req: Request, res: Response) => {
   const { codigo } = req.params;
 
-  if(!codigo){
-    return res.status(400).json({ message: 'El código de la sucursal es requerido' });  
+  if (!codigo) {
+    return res.status(400).json({ message: 'El código de la sucursal es requerido' });
   }
 
   try {
@@ -258,11 +285,21 @@ export const getVentaHoraController = async (req: Request, res: Response) => {
         sucursal: { [Op.eq]: codigo },
         fecha: { [Op.eq]: fn('CURDATE') }
       }
-    })
+    });
 
-    res.status(200).json(result);
+    const base = baseHora.map((hora) => {
+      const ventaHora = result.find(r => r.dataValues.hora.toString() === hora.hora.toString());
+      return {
+        id: hora.id,
+        hora: hora.hora,
+        venta: ventaHora ? ventaHora.dataValues.venta : null,
+        asp: hora.asp
+      };
+    });
+
+    res.status(200).json(base);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Error al obtener la venta por hora' });
   }
-}
+};

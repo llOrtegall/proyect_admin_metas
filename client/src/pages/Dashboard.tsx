@@ -52,7 +52,6 @@ function Dashboard() {
         <Card className='flex justify-around'>
           <DonutChart className='' data={data.productos} category='producto' value='vta_dia' showLabel={true}
             valueFormatter={(number: number) => `$${Intl.NumberFormat("us").format(number).toString()}`}
-            colors={['emerald', 'blue', 'cyan', 'lime', 'fuchsia', 'gray', 'red', 'pink', 'amber', 'violet', 'yellow', 'indigo']}
           />
           <div className='flex flex-col gap-1'>
             <Callout title='Meta Chance Del día' variant='success'>
