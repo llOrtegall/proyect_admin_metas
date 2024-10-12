@@ -15,12 +15,13 @@ interface Sugerido {
 
 function Sugeridos() {
   const [sugeridos, setSugeridos] = useState<Sugerido[]>([]);
+  const [fecha, setFecha] = useState<string>('');
 
   useEffect(() => {
-    axios.get('/sugeridos')
+    axios.get(`/sugeridos?fecha=${fecha}`)
       .then(response => setSugeridos(response.data))
       .catch(error => console.log(error));
-  }, []);
+  }, [fecha]);
 
   return (
     <section className='text-black'>
@@ -28,7 +29,7 @@ function Sugeridos() {
         <h1 className='text-2xl font-bold'>Cumplimiento Sugeridos Multired</h1>
         <form>
           <label>Fecha:</label>
-          <input type='date' className='border border-gray-300 rounded-md' />
+          <input type='date' className='border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
         </form>
         <button className='bg-green-600 px-4 py-2 rounded-md text-white hover:bg-green-500'>Export Excel</button>
       </div>

@@ -1,12 +1,20 @@
 import { Sugeridos } from '../model/sugeridos.model';
 import { Request, Response } from 'express';
 import { fn } from 'sequelize';
+import { z } from 'zod';
 
 export const getSugeridos = async (req: Request, res: Response) => {
+  const { fecha } = req.query;
+
+  const fechaSchema = z.optional(z.string());
+  const result = fechaSchema.safeParse(fecha);
+
+  const fechaQuery = result.data && result.data.length > 0 ? result.data : fn('CURDATE');
+
   try {
     const sugeridos = await Sugeridos.findAll({
       attributes: { exclude: ['FECHA', 'ZONA',] },
-      where: { FECHA: fn('CURDATE'), ZONA: 39627 },
+      where: { FECHA: fechaQuery, ZONA: 39627 },
     });
 
     const sugeridosMap = sugeridos.map( sug => ({
