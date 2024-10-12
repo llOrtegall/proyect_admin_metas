@@ -1,8 +1,9 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import ExcelData from '../components/ExportExcel';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-interface Sugerido {
+export interface Sugerido {
   sucursal: number
   documento: string
   nombres: string
@@ -16,6 +17,7 @@ interface Sugerido {
 function Sugeridos() {
   const [sugeridos, setSugeridos] = useState<Sugerido[]>([]);
   const [fecha, setFecha] = useState<string>('');
+  const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
     axios.get(`/sugeridos?fecha=${fecha}`)
@@ -23,15 +25,22 @@ function Sugeridos() {
       .catch(error => console.log(error));
   }, [fecha]);
 
+  const dataFiltered = sugeridos.filter(sug => sug.sucursal.toString().includes(filter))
+
   return (
     <section className='text-black'>
       <div className='flex items-center justify-around bg-slate-200 px-4 py-2 rounded-t-md'>
         <h1 className='text-2xl font-bold'>Cumplimiento Sugeridos Multired</h1>
+        <div>
+          <label>Sucursal:</label>
+          <input type='search' className='border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)}/>
+        </div>
         <form>
           <label>Fecha:</label>
           <input type='date' className='border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
         </form>
-        <button className='bg-green-600 px-4 py-2 rounded-md text-white hover:bg-green-500'>Export Excel</button>
+        {/* <button className='bg-green-600 px-4 py-2 rounded-md text-white hover:bg-green-500'>Export Excel</button> */}
+        <ExcelData datos={sugeridos} />
       </div>
       <div className='h-[92vh] overflow-y-auto'>
         <Table>
@@ -48,7 +57,7 @@ function Sugeridos() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sugeridos.map(sug => (
+            {dataFiltered.map(sug => (
               <TableRow key={sug.documento}>
                 <TableCell>{sug.sucursal}</TableCell>
                 <TableCell>{sug.documento}</TableCell>

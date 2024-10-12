@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { Toaster } from "sonner";
 
 function Root (){
   return(
@@ -8,6 +9,7 @@ function Root (){
       <main className='w-10/12 p-2'>
         <Outlet />
       </main>
+      <Toaster position="top-right" duration={4000} visibleToasts={4} richColors/>
     </section>
   )
 }
