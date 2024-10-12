@@ -12,11 +12,13 @@ interface SucursalAttributes {
 
 type SucursalCreationAttributes = Optional<SucursalAttributes, 'codigo'>;
 
-export class Sucursal extends Model<SucursalAttributes, SucursalCreationAttributes> {
+export class Sucursal extends Model<SucursalAttributes, SucursalCreationAttributes> implements SucursalAttributes {
   declare zona: string;
   declare codigo: string;
   declare nombre: string;
   declare direccion: string;
+  declare categoria: string;
+  declare version: string;
 }
 
 Sucursal.init({

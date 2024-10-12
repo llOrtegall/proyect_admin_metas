@@ -35,7 +35,7 @@ interface MetaAttributes {
 
 type MetaCreationAttributes = Optional<MetaAttributes, 'sucursal' | 'fecha'>;
 
-export class Meta extends Model<MetaAttributes, MetaCreationAttributes> {
+export class Meta extends Model<MetaAttributes, MetaCreationAttributes> implements MetaAttributes {
   declare sucursal: number;
   declare zona: number;
   declare fecha: Date;
