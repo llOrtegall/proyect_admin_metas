@@ -8,6 +8,7 @@ import ProductDetail from '../pages/ProductDetail';
 import VentaHora from '../pages/VentaHora';
 import NotFound from '../pages/NotFound';
 import Sugeridos from '../pages/Sugeridos';
+import UsuariosLogueados from '../pages/UsuariosLog';
 
 const Router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const Router = createBrowserRouter([
       {
         path: 'Sugeridos',
         element: <Sugeridos />
+      },
+      {
+        path: 'Usuarios',
+        element: <UsuariosLogueados />
       },
       {
         path: 'ProductDetail/:name',

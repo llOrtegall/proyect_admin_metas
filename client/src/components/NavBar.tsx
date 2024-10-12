@@ -26,9 +26,9 @@ function NavBar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to='Detalles' className={({ isActive }) => isActive ? 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
+          <NavLink to='Usuarios' className={({ isActive }) => isActive ? 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
             <RiMenu2Line />
-            <span>Detalles</span>
+            <span>Usuarios Logueados</span>
           </NavLink>
         </li>
       </ul>
