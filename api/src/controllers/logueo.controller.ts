@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { fn } from 'sequelize';
 import { z } from 'zod';
 
-export const getSugeridos = async (req: Request, res: Response) => {
+export const getLogueos = async (req: Request, res: Response) => {
   const { fecha } = req.query;
 
   const fechaSchema = z.optional(z.string());
