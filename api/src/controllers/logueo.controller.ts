@@ -9,7 +9,7 @@ export const getLogueos = async (req: Request, res: Response) => {
   const fechaSchema = z.optional(z.string());
   const result = fechaSchema.safeParse(fecha);
 
-  const fechaQuery = result.data && result.data.length > 0 ? result.data : fn('CURDATE');
+  const fechaQuery = result.data && result.data.length > 0 ? result.data.slice(0, 10): fn('CURDATE');
 
   try {
     const sugeridos = await Logueo.findAll({
