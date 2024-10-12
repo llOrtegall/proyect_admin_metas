@@ -20,7 +20,7 @@ export const getSugeridos = async (req: Request, res: Response) => {
       meta_sugerido2: sug.META_SUG2
     }))
 
-    res.json(sugeridosMap);
+    res.json(sugeridosMap.sort((a, b) => b.venta_sugerido - a.venta_sugerido));
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
