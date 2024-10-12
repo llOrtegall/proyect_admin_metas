@@ -1,18 +1,18 @@
 version: '3'
 
 services: 
-  web:
+  web_adm_metas:
     image: nginx:mainline-alpine3.18-perl
+    restart: always
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./config:/etc/nginx/conf.d
       - ./client/dist:/usr/share/nginx/html
-  api:
-    image: node:latest
-    working_dir: /app
-    volumes:
-      - ./api:/app
+
+  api_adm_metas:
+    build: ./server
+    restart: always
     ports:
-      - "3000:3000"
-    command: yarn start
+      - "4000:4000"
+    container_name: api_adm_metas
