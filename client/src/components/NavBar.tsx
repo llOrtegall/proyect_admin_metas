@@ -12,21 +12,21 @@ function NavBar() {
           <p className='text-center'>Metas Admin Multired</p>
         </Card>
       </figure>
-      <ul className='flex flex-col gap-2 flex-1 text-xs 2xl:text-sm 3xl:text-lg ' >
+      <ul className='flex flex-col gap-2 flex-1 text-xs 2xl:text-sm 3xl:text-lg' >
         <li>
-          <NavLink to='/' className={({ isActive }) => isActive ? 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
+          <NavLink to='/' className={({ isActive }) => isActive ? 'flex px-4 items-center hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 items-center hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
             <RiHome2Line />
             <span>Dashboard</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to='Sugeridos' className={({ isActive }) => isActive ? 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
+          <NavLink to='Sugeridos' className={({ isActive }) => isActive ? 'flex px-4 items-center hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 items-center hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
             <RiFileChartLine />
             <span>Sugeridos</span>
           </NavLink>
         </li>
         <li>
-          <NavLink to='Usuarios' className={({ isActive }) => isActive ? 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
+          <NavLink to='Usuarios' className={({ isActive }) => isActive ? 'flex px-4 items-center hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-s dark:text-yellow-200 transition-all' : 'flex px-4 items-center hover:bg-indigo-600/20 mx-2 rounded-md py-2  gap-2 text-slate-400 transition-all'}>
             <RiMenu2Line />
             <span>Usuarios Logueados</span>
           </NavLink>

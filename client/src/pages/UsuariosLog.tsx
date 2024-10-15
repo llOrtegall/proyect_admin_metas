@@ -23,14 +23,14 @@ function UsuariosLogueados () {
   return (
     <section className='text-black'>
       <div className='flex items-center justify-around bg-slate-200 px-4 py-2 rounded-t-md'>
-        <h1 className='text-2xl font-bold'>Cumplimiento Sugeridos Multired</h1>
+        <h1 className='text-sm 2xl:text-lg 3xl:text-2xl font-bold'>Cumplimiento Sugeridos Multired</h1>
         <div>
-          <label>Sucursal:</label>
-          <input type='search' className='border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)}/>
+          <label className='text-xs 2xl:text-sm 3xl:text-base '>Sucursal:</label>
+          <input type='search' className='text-xs 2xl:text-sm 3xl:text-base border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)}/>
         </div>
         <form>
-          <label>Fecha:</label>
-          <input type='date' className='border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
+          <label className='text-xs 2xl:text-sm 3xl:text-base '>Fecha:</label>
+          <input type='date' className='text-xs 2xl:text-sm 3xl:text-base border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
         </form>
         {/* <ExcelData datos={sugeridos} /> */}
       </div>

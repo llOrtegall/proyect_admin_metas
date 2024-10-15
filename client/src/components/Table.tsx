@@ -1,45 +1,22 @@
 // Tremor Table [v0.0.3]
-
 import React from "react"
 import { cx } from "../lib/utils"
 
-const TableRoot = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, forwardedRef) => (
-  <div ref={forwardedRef}
-  // Activate if table is used in a float environment
-  // className="flow-root"
-  >
-    <div
-      // make table scrollable on mobile
-      className={cx("w-full overflow-auto whitespace-nowrap", className)}
-      {...props}
-    >
-      {children}
-    </div>
+const TableRoot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, children, ...props }, forwardedRef) =>
+(<div ref={forwardedRef} /* Activate if table is used in a float environment   className="flow-root"*/>
+  <div /* make table scrollable on mobile*/ className={cx("w-full overflow-auto whitespace-nowrap", className)} {...props} >
+    {children}
   </div>
+</div>
 ))
 
 TableRoot.displayName = "TableRoot"
 
-const Table = React.forwardRef<
-  HTMLTableElement,
-  React.TableHTMLAttributes<HTMLTableElement>
->(({ className, ...props }, forwardedRef) => (
-  <table
-    ref={forwardedRef}
-    tremor-id="tremor-raw"
-    className={cx(
-      // base
-      "w-full caption-bottom border-b",
-      // border color
-      "border-gray-200 dark:border-gray-800",
-      className,
-    )}
-    {...props}
-  />
-))
+const Table = React.forwardRef<HTMLTableElement, React.TableHTMLAttributes<HTMLTableElement>>(
+  ({ className, ...props }, forwardedRef) => (
+    <table ref={forwardedRef} tremor-id="tremor-raw" className={cx("w-full caption-bottom border-b", "border-gray-200 dark:border-gray-800", className)} {...props} />
+  )
+)
 
 Table.displayName = "Table"
 
@@ -60,7 +37,7 @@ const TableHeaderCell = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "border-b px-4 py-3.5 text-left text-sm font-semibold",
+      "p-2 2xl:p-4 text-xs 2xl:text-sm 3xl:text-base",
       // text color
       "text-gray-900 dark:text-gray-50",
       // border color
@@ -117,7 +94,7 @@ const TableCell = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "p-4 text-sm",
+      "p-2 2xl:p-4 text-xs 2xl:text-sm 3xl:text-base text-center",
       // text color
       "text-gray-600 dark:text-gray-400",
       className,

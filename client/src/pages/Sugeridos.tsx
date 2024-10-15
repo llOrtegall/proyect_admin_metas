@@ -30,19 +30,19 @@ function Sugeridos() {
   return (
     <section className='text-black'>
       <div className='flex items-center justify-around bg-slate-200 px-4 py-2 rounded-t-md'>
-        <h1 className='text-2xl font-bold'>Cumplimiento Sugeridos Multired</h1>
+        <h1 className='text-xs 2xl:text-lg 3xl:text-xl font-bold'>Cumplimiento Sugeridos Multired</h1>
         <div>
-          <label>Sucursal:</label>
-          <input type='search' className='border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)}/>
+          <label className='text-xs 2xl:text-sm 3xl:text-lg'>Sucursal:</label>
+          <input type='search' className='text-xs 2xl:text-sm 3xl:text-lg border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)}/>
         </div>
         <form>
-          <label>Fecha:</label>
-          <input type='date' className='border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
+          <label className='text-xs 2xl:text-sm 3xl:text-lg'>Fecha:</label>
+          <input type='date' className='text-xs 2xl:text-sm 3xl:text-lg border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
         </form>
         {/* <button className='bg-green-600 px-4 py-2 rounded-md text-white hover:bg-green-500'>Export Excel</button> */}
         <ExcelData datos={sugeridos} />
       </div>
-      <div className='h-[92vh] overflow-y-auto'>
+      <div className='h-[89vh] 3xl:h-[92vh] overflow-y-auto'>
         <Table>
           <TableHead className='sticky top-0 bg-blue-100'>
             <TableRow>
