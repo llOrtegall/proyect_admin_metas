@@ -10,4 +10,5 @@ export const horaConnection = new Sequelize(DB_HORA, USER_HORA, PASS_HORA, {
   host: HOST_HORA,
   port: parseInt(PORT_HORA),
   dialect: 'mysql',
+  timezone: '-05:00',
 });

@@ -3,7 +3,10 @@ version: '3'
 services: 
   web_adm_metas:
     image: nginx:mainline-alpine3.18-perl
+    container_name: web_adm_metas
     restart: always
+    environment:
+      - TZ=America/Bogota
     ports:
       - "80:80"
     volumes:
@@ -12,7 +15,10 @@ services:
 
   api_adm_metas:
     build: ./api
+    container_name: api_adm_metas
+    image: api_adm_metas:v.1.0
+    environment:
+      - TZ=America/Bogota
     restart: always
     ports:
       - "4000:4000"
-    container_name: api_adm_metas
