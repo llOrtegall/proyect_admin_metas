@@ -48,3 +48,5 @@ SucursalesPowerBi.init({
   tableName: 'SUCURSALES',
   timestamps: true
 })
+
+export { SucursalesPowerBi };
