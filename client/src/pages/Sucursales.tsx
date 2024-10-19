@@ -63,10 +63,11 @@ export default function SucursalesPage () {
           <TableBody>
             {sucursales.map(sucursal => (
               <TableRow key={sucursal.CCOSTO}>
+                <TableCell>{sucursal.CCOSTO}</TableCell>
                 <TableCell>{sucursal.CODIGO}</TableCell>
-                <TableCell>{sucursal.NOMBRE}</TableCell>
-                <TableCell>{sucursal.DIRECCION}</TableCell>
-                <TableCell>{sucursal.SUPERVISOR}</TableCell>
+                <TableCell className='text-start'>{sucursal.NOMBRE}</TableCell>
+                <TableCell className='text-start'>{sucursal.DIRECCION}</TableCell>
+                <TableCell className='text-start'>{sucursal.SUPERVISOR}</TableCell>
                 <TableCell>{sucursal.CATEGORIA}</TableCell>
                 <TableCell>{sucursal.ESTADO}</TableCell>
               </TableRow>
