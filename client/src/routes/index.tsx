@@ -9,6 +9,7 @@ import VentaHora from '../pages/VentaHora';
 import NotFound from '../pages/NotFound';
 import Sugeridos from '../pages/Sugeridos';
 import UsuariosLogueados from '../pages/UsuariosLog';
+import SucursalesPage from '../pages/Sucursales';
 
 const Router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const Router = createBrowserRouter([
       {
         path: 'Sugeridos',
         element: <Sugeridos />
+      },
+      {
+        path: 'Sucursales',
+        element: <SucursalesPage />
       },
       {
         path: 'Usuarios',
