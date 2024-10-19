@@ -46,7 +46,7 @@ SucursalesPowerBi.init({
 }, {
   sequelize: PowerBI,
   tableName: 'SUCURSALES',
-  timestamps: true
+  timestamps: false
 })
 
 export { SucursalesPowerBi };
