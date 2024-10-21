@@ -1,30 +1,9 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { SucursalPowerBi } from '../types/interfaces';
 import { RiEditLine } from '@remixicon/react';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-interface SucursalPowerBi {
-  ZONA: string;
-  CCOSTO: string;
-  CODIGO: string;
-  NOMBRE: string;
-  DIRECCION: string;
-  TIPO: string;
-  DISPOSITIVO: string;
-  SUPERVISOR: string;
-  CANAL: string;
-  CATEGORIA: string;
-  HORA_ENTRADA: string;
-  HORA_SALIDA: string;
-  HORA_ENTRADA_FES: string;
-  HORA_SALIDA_FES: string;
-  SUBZONA: string;
-  CELULA: string;
-  HORAS_ORDINARIAS: number;
-  HORAS_FESTIVAS: number;
-  ESTADO: string;
-}
 
 export default function SucursalesPage () {
   const [sucursales, setSucursales] = useState<SucursalPowerBi[]>([]);
