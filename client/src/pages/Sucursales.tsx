@@ -26,6 +26,7 @@ interface SucursalPowerBi {
 
 export default function SucursalesPage () {
   const [sucursales, setSucursales] = useState<SucursalPowerBi[]>([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     axios.get('/sucursalesPB')
@@ -37,13 +38,16 @@ export default function SucursalesPage () {
       });
   }, []);
 
+  const sucursalesFiltered = sucursales.filter(suc => suc.CODIGO.toLowerCase().includes(search))
+
   return (
     <section className='text-black'>
       <div className='flex items-center justify-around bg-slate-200 px-4 py-2 rounded-t-md'>
         <h1 className='text-xs 2xl:text-lg 3xl:text-xl font-bold'>Sucursales Multired</h1>
         <div>
           <label className='text-xs 2xl:text-sm 3xl:text-lg'>Sucursal:</label>
-          <input type='search' className='text-xs 2xl:text-sm 3xl:text-lg border border-gray-300 rounded-md' placeholder='N° Sucursal | Nombre'/>
+          <input type='search' value={search} onChange={e => setSearch(e.target.value)} placeholder='N° Sucursal | Nombre'
+            className='text-xs 2xl:text-sm 3xl:text-lg border border-gray-300 rounded-md'/>
         </div>
       </div>
 
@@ -61,8 +65,8 @@ export default function SucursalesPage () {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sucursales.map(sucursal => (
-              <TableRow key={sucursal.CCOSTO}>
+            {sucursalesFiltered.map(sucursal => (
+              <TableRow key={sucursal.CODIGO}>
                 <TableCell>{sucursal.CCOSTO}</TableCell>
                 <TableCell>{sucursal.CODIGO}</TableCell>
                 <TableCell className='text-start'>{sucursal.NOMBRE}</TableCell>
