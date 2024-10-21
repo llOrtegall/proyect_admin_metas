@@ -19,3 +19,17 @@ export interface SucursalPowerBi {
   HORAS_FESTIVAS: number;
   ESTADO: string;
 }
+
+export interface Products {
+  producto: string
+  vta_dia: number
+  meta_dia: number
+  porcentaje: number
+}
+
+export interface ResponseProducts {
+  productos: Products[]
+  metaDia: number
+  ventaDia: number
+  porcentaje: number
+}

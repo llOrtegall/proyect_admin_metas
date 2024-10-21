@@ -1,25 +1,12 @@
 import { ProgressCircle } from '../components/ProgressCircle';
 import { ProgressBar } from '../components/ProgressBar';
+import { ResponseProducts } from '../types/interfaces';
 import { DonutChart } from '../components/DonutChart';
 import { Callout } from '../components/Callout';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Card } from '../components/Card';
 import axios from 'axios';
-
-interface Products {
-  producto: string
-  vta_dia: number
-  meta_dia: number
-  porcentaje: number
-}
-
-interface Response {
-  productos: Products[]
-  metaDia: number
-  ventaDia: number
-  porcentaje: number
-}
 
 function determineColor(porcentaje: number) {
   if (porcentaje <= 20) return 'bg-red-50'
@@ -29,7 +16,7 @@ function determineColor(porcentaje: number) {
 }
 
 function Dashboard() {
-  const [data, setData] = useState<Response>({ productos: [], metaDia: 0, ventaDia: 0, porcentaje: 0 })
+  const [data, setData] = useState<ResponseProducts>({ productos: [], metaDia: 0, ventaDia: 0, porcentaje: 0 })
   const navigate = useNavigate();
 
   useEffect(() => {
