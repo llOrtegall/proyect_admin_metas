@@ -10,6 +10,7 @@ import NotFound from '../pages/NotFound';
 import Sugeridos from '../pages/Sugeridos';
 import UsuariosLogueados from '../pages/UsuariosLog';
 import SucursalesPage from '../pages/Sucursales';
+import SucursalDetail from '../pages/SucursalDetail';
 
 const Router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const Router = createBrowserRouter([
       {
         path: 'ventaHora/:codigo',
         element: <VentaHora />
+      },
+      {
+        path: 'Sucursal/:codigo',
+        element: <SucursalDetail />
       }
     ]
   }

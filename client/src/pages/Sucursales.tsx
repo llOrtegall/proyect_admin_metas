@@ -1,6 +1,8 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { RiEditLine } from '@remixicon/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface SucursalPowerBi {
   ZONA: string;
@@ -27,6 +29,7 @@ interface SucursalPowerBi {
 export default function SucursalesPage () {
   const [sucursales, setSucursales] = useState<SucursalPowerBi[]>([]);
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('/sucursalesPB')
@@ -62,6 +65,7 @@ export default function SucursalesPage () {
               <TableHeaderCell>Supervisor</TableHeaderCell>
               <TableHeaderCell>Categoría</TableHeaderCell>
               <TableHeaderCell>Estado</TableHeaderCell>
+              <TableHeaderCell>Opciones</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -74,6 +78,11 @@ export default function SucursalesPage () {
                 <TableCell className='text-start'>{sucursal.SUPERVISOR}</TableCell>
                 <TableCell>{sucursal.CATEGORIA}</TableCell>
                 <TableCell>{sucursal.ESTADO}</TableCell>
+                <TableCell>
+                  <button onClick={() => navigate(`/Sucursal/${sucursal.CODIGO}`)} className='bg-yellow-200 rounded-md px-2 py-1' title='Editar sucursal'>
+                    <RiEditLine />
+                  </button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
