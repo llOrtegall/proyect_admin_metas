@@ -7,6 +7,8 @@ export default function SucursalDetail() {
   const { codigo } = useParams<{ codigo: string }>()
 
   const [sucursal, setSucursal] = useState<SucursalPowerBi | undefined>(undefined)
+  
+  const [reload, setReload] = useState(false)
 
   useEffect(() => {
     axios.get(`/sucursalPB/${codigo}`)
@@ -14,7 +16,7 @@ export default function SucursalDetail() {
         setSucursal(res.data)
       })
       .catch(err => console.log(err))
-  }, [codigo])
+  }, [codigo, reload])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setSucursal({
@@ -33,8 +35,11 @@ export default function SucursalDetail() {
 
     axios.post('/editarSucursalPB', { ...data, CODIGO: codigo })
       .then(res => {
-        console.log(res.data)
-        alert('Sucursal actualizada correctamente')
+        if(res.status === 200){
+          console.log(res.data)
+          alert('Sucursal actualizada correctamente')
+          setReload(!reload)
+        }
       })
       .catch(err => console.log(err))
   }
