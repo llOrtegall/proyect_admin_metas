@@ -21,7 +21,7 @@ const GenericSelect = ({ name, seleccionado, funSelect, label }: SelectComponent
   const data = selectDataMap[name];
 
   return (
-    <>
+    <div>
       <Label htmlFor={name}>{label}</Label>
       <Select name={name} value={seleccionado} onValueChange={funSelect}>
         <SelectTrigger className='mt-2'>
@@ -35,11 +35,11 @@ const GenericSelect = ({ name, seleccionado, funSelect, label }: SelectComponent
           ))}
         </SelectContent>
       </Select>
-    </>
+    </div>
   )
 }
 
-export const SeleSupervisor = (props: Omit<SelectComponentProps, 'name' | 'label'>) => (
+export const SelectSupervisor = (props: Omit<SelectComponentProps, 'name' | 'label'>) => (
   <GenericSelect name='SUPERVISOR' label='Supervisor' {...props} />
 );
 
