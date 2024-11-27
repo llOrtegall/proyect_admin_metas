@@ -1,9 +1,11 @@
-import { SeleSupervisor, SelectCanal, SelectCelula, SelectEstado, SelectSubzona } from '../components/SelectsDetailSucursal'
+import { SelectSupervisor, SelectCanal, SelectCelula, SelectEstado, SelectSubzona } from '../components/SelectsDetailSucursal'
 import { SucursalPowerBi } from '../types/interfaces'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import axios from 'axios'
+import { Card } from '../components/Card'
+import { Badge } from '../components/Badge'
 
 
 export default function SucursalDetail() {
@@ -15,9 +17,7 @@ export default function SucursalDetail() {
 
   useEffect(() => {
     axios.get(`/sucursalPB/${codigo}`)
-      .then(res => {
-        setSucursal(res.data)
-      })
+      .then(res => setSucursal(res.data))
       .catch(err => console.log(err))
   }, [codigo, reload])
 
@@ -34,13 +34,11 @@ export default function SucursalDetail() {
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries())
 
-    console.log(data);
-
     axios.post('/editarSucursalPB', { ...data, CODIGO: codigo })
       .then(res => {
         if (res.status === 200) {
           console.log(res.data)
-          toast.success('Sucursal actualizada correctamente',)
+          toast.success('Actualizada correctamente', { description: 'Los cambios se han guardado' })
           setReload(!reload)
         }
       })
@@ -49,89 +47,148 @@ export default function SucursalDetail() {
 
   return (
     <section>
-      <div className='flex justify-around py-4 bg-blue-200'>
-        <p className='text-gray-700'><span className='font-semibold'>Código:</span> {sucursal?.CODIGO}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Nombre:</span> {sucursal?.NOMBRE}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Zona:</span> {sucursal?.ZONA}</p>
-      </div>
-      <div className='grid grid-cols-2'>
-        <div className='p-2 border rounded-md m-1'>
-          <p className='text-gray-700'><span className='font-semibold'>Centro de Costo:</span> {sucursal?.CCOSTO}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Dirección:</span> {sucursal?.DIRECCION}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Supervisor:</span> {sucursal?.SUPERVISOR}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Célula:</span> {sucursal?.CELULA}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Subzona:</span> {sucursal?.SUBZONA}</p>
-        </div>
-        <div className='p-2 border rounded-md m-1'>
-          <p className='text-gray-700'><span className='font-semibold'>Tipo:</span> {sucursal?.TIPO}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Dispositivo:</span> {sucursal?.DISPOSITIVO}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Canal:</span> {sucursal?.CANAL}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Categoría:</span> {sucursal?.CATEGORIA}</p>
-          <p className='text-gray-700'><span className='font-semibold'>Estado:</span> {sucursal?.ESTADO}</p>
-        </div>
-      </div>
-      <form onSubmit={handleSubmit} className='bg-blue-200 p-2 rounded-md m-1 grid grid-cols-4 gap-y-4 gap-x-8 place-content-center'>
-        <SeleSupervisor key='SUPERVISOR_01' seleccionado={sucursal?.SUPERVISOR} funSelect={(e) => setSucursal({ ...sucursal!, SUPERVISOR: e })} />
 
-        <SelectCanal key='CANAL_01' seleccionado={sucursal?.CANAL} funSelect={(e) => setSucursal({ ...sucursal!, CANAL: e })} />
+      <Card className='flex m-1 justify-around border-t-4 border-blue-500'>
+        <p className='text-gray-700 font-semibold'>
+          Sucursal:
+          <Badge variant='warning'>
+            {sucursal?.CODIGO}
+          </Badge>
+        </p>
+        <p className='text-gray-700 font-semibold'>
+          Nombre Sucursal:
+          <Badge variant='warning'>
+            {sucursal?.NOMBRE}
+          </Badge>
+        </p>
+        <p className='text-gray-700 font-semibold'>
+          Empresa:
+          <Badge variant='warning'>
+            {sucursal?.ZONA === '39627' ? 'Multired' : 'Servired'}
+          </Badge>
+        </p>
+      </Card >
 
-        <label className='text-gray-700 font-semibold'>Hora de Entrada:</label>
-        <input
-          type='time'
-          name='HORA_ENTRADA'
-          value={sucursal?.HORA_ENTRADA}
-          onChange={handleChange}
-          className='border p-1 rounded-md text-black'
-        />
-        <label className='text-gray-700 font-semibold'>Hora de Salida:</label>
-        <input
-          type='time'
-          name='HORA_SALIDA'
-          value={sucursal?.HORA_SALIDA}
-          onChange={handleChange}
-          className='border p-1 rounded-md text-black'
-        />
-        <label className='text-gray-700 font-semibold'>Hora de Entrada Festivos:</label>
-        <input
-          type='time'
-          name='HORA_ENTRADA_FES'
-          value={sucursal?.HORA_ENTRADA_FES}
-          onChange={handleChange}
-          className='border p-1 rounded-md text-black'
-        />
-        <label className='text-gray-700 font-semibold'>Hora de Salida Festivos:</label>
-        <input
-          type='time'
-          name='HORA_SALIDA_FES'
-          value={sucursal?.HORA_SALIDA_FES}
-          onChange={handleChange}
-          className='border p-1 rounded-md text-black'
-        />
-        <SelectSubzona key='SUBZONA_01' seleccionado={sucursal?.SUBZONA} funSelect={(e) => setSucursal({ ...sucursal!, SUBZONA: e })} />
+      <Card className='m-1 border-t-4 border-blue-500 grid grid-cols-2 gap-1'>
+        <p className='text-gray-700'><span className='font-semibold'>Centro de Costo:</span> {sucursal?.CCOSTO}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Dirección:</span> {sucursal?.DIRECCION}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Supervisor:</span> {sucursal?.SUPERVISOR}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Subzona:</span> {sucursal?.SUBZONA}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Célula:</span> {sucursal?.CELULA}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Dispositivo:</span> {sucursal?.DISPOSITIVO}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Tipo:</span> {sucursal?.TIPO}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Canal:</span> {sucursal?.CANAL}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Categoría:</span> {sucursal?.CATEGORIA}</p>
+        <p className='text-gray-700'><span className='font-semibold'>Estado:</span> {sucursal?.ESTADO}</p>
+      </Card>
 
-        <SelectCelula key='CELULA_01' seleccionado={sucursal?.CELULA} funSelect={(e) => setSucursal({ ...sucursal!, CELULA: e })} />
+      <Card className='flex m-1 justify-around border-t-4 border-blue-500'>
+        <form onSubmit={handleSubmit} className='bg-blue-100 px-12 py-6 grid grid-cols-4 gap-4 m-1 rounded-md'>
+          <SelectSupervisor
+            key='SUPERVISOR_01'
+            seleccionado={sucursal?.SUPERVISOR}
+            funSelect={(e) => setSucursal({ ...sucursal!, SUPERVISOR: e })}
+          />
 
-        <label className='text-gray-700 font-semibold'>Horas Ordinarias:</label>
-        <input
-          type='text'
-          name='HORAS_ORDINARIAS'
-          value={sucursal?.HORAS_ORDINARIAS}
-          onChange={handleChange}
-          className='border p-1 rounded-md text-black'
-        />
-        <label className='text-gray-700 font-semibold'>Horas Festivas:</label>
-        <input
-          type='text'
-          name='HORAS_FESTIVAS'
-          value={sucursal?.HORAS_FESTIVAS}
-          onChange={handleChange}
-          className='border p-1 rounded-md text-black'
-        />
+          <SelectCanal
+            key='CANAL_01'
+            seleccionado={sucursal?.CANAL}
+            funSelect={(e) => setSucursal({ ...sucursal!, CANAL: e })}
+          />
 
-        <SelectEstado key='ESTADO_01' seleccionado={sucursal?.ESTADO} funSelect={(e) => setSucursal({ ...sucursal!, ESTADO: e })} />
+          <div className='flex flex-col space-y-2 justify-center'>
+            <label className='text-gray-700 text-sm'>Hora de Entrada:</label>
+            <input
+              type='time'
+              name='HORA_ENTRADA'
+              value={sucursal?.HORA_ENTRADA}
+              onChange={handleChange}
+              className='border p-1 rounded-md text-gray-700'
+            />
+          </div>
 
-        <button type='submit' className='mt-4 bg-blue-500 text-white p-2 rounded-md'>Actualizar</button>
-      </form>
+          <div className='flex flex-col space-y-2 justify-center'>
+            <label className='text-gray-700 text-sm'>Hora de Salida:</label>
+            <input
+              type='time'
+              name='HORA_SALIDA'
+              value={sucursal?.HORA_SALIDA}
+              onChange={handleChange}
+              className='border p-1 rounded-md text-gray-700'
+            />
+          </div>
+
+          <div className='flex flex-col space-y-2 justify-center'>
+            <label className='text-gray-700 text-sm'>Hora de Entrada Festivos:</label>
+            <input
+              type='time'
+              name='HORA_ENTRADA_FES'
+              value={sucursal?.HORA_ENTRADA_FES}
+              onChange={handleChange}
+              className='border p-1 rounded-md text-gray-700'
+            />
+          </div>
+
+          <div className='flex flex-col space-y-2 justify-center'>
+            <label className='text-gray-700 text-sm'>Hora de Salida Festivos:</label>
+            <input
+              type='time'
+              name='HORA_SALIDA_FES'
+              value={sucursal?.HORA_SALIDA_FES}
+              onChange={handleChange}
+              className='border p-1 rounded-md text-gray-700'
+            />
+          </div>
+
+          <SelectSubzona
+            key='SUBZONA_01'
+            seleccionado={sucursal?.SUBZONA}
+            funSelect={(e) => setSucursal({ ...sucursal!, SUBZONA: e })}
+          />
+
+          <SelectCelula
+            key='CELULA_01'
+            seleccionado={sucursal?.CELULA}
+            funSelect={(e) => setSucursal({ ...sucursal!, CELULA: e })}
+          />
+
+          <div className='flex flex-col space-y-2 justify-center'>
+            <label className='text-gray-700 text-sm'>Horas Ordinarias:</label>
+            <input
+              type='text'
+              name='HORAS_ORDINARIAS'
+              value={sucursal?.HORAS_ORDINARIAS}
+              onChange={handleChange}
+              className='border p-1 rounded-md text-gray-700'
+            />
+          </div>
+
+          <div className='flex flex-col space-y-2 justify-center'>
+            <label className='text-gray-700 text-sm'>Horas Festivas:</label>
+            <input
+              type='text'
+              name='HORAS_FESTIVAS'
+              value={sucursal?.HORAS_FESTIVAS}
+              onChange={handleChange}
+              className='border p-1 rounded-md text-gray-700'
+            />
+          </div>
+
+          <SelectEstado
+            key='ESTADO_01'
+            seleccionado={sucursal?.ESTADO}
+            funSelect={(e) => setSucursal({ ...sucursal!, ESTADO: e })}
+          />
+
+          <div className='flex flex-col space-y-2 justify-center'>
+            <label className='text-gray-700 text-sm'>Confirmar Cambios:</label>
+            <button type='submit' className='bg-blue-500 text-white p-2 rounded-md '>
+              Actualizar
+            </button>
+          </div>
+        </form>
+      </Card>
+
     </section>
   )
 }
