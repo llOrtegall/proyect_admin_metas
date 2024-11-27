@@ -1,14 +1,184 @@
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select'
 import { SucursalPowerBi } from '../types/interfaces'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { Label } from '../components/Label'
 import { toast } from 'sonner'
+import axios from 'axios'
+
+const dataSelect = [
+  { label: 'ZONA CUMBRE', value: 'ZONA CUMBRE' },
+  { label: 'ZONA 1', value: 'ZONA 1' },
+  { label: 'ZONA 2', value: 'ZONA 2' },
+  { label: 'ZONA VIJES', value: 'ZONA VIJES' },
+]
+
+const dataSelectCanal = [
+  { label: 'TAT', value: 'TAT' },
+  { label: 'INDEPENDIENTE PUNTO', value: 'INDEPENDIENTE PUNTO' },
+  { label: 'INDEPENDIENTE MOVIL', value: 'INDEPENDIENTE MOVIL' },
+  { label: 'NOMINA PUNTO', value: 'NOMINA PUNTO' },
+  { label: 'CAJAS', value: 'CAJAS' },
+  { label: 'MOVIL INDEPENDIENTE', value: 'MOVIL INDEPENDIENTE' },
+  { label: 'PARADERO', value: 'PARADERO' },
+  { label: 'APP', value: 'APP' },
+  { label: 'NOMINA MOVIL', value: 'NOMINA MOVIL' },
+]
+
+const dataSelectCelula = [
+  { label: 'BITACO', value: 'BITACO' },
+  { label: 'PAVAS', value: 'PAVAS' },
+  { label: 'CENTRO', value: 'CENTRO' },
+  { label: 'LOMITAS', value: 'LOMITAS' },
+  { label: 'ALFAGUARA', value: 'ALFAGUARA' },
+  { label: 'ORIENTE', value: 'ORIENTE' },
+  { label: 'OCCIDENTE', value: 'OCCIDENTE' },
+  { label: 'NORTE', value: 'NORTE' },
+  { label: 'BONANZA', value: 'BONANZA' },
+  { label: 'TERRANOVA', value: 'TERRANOVA' },
+  { label: 'VILLAPAZ', value: 'VILLAPAZ' },
+  { label: 'VENTURA', value: 'VENTURA' },
+  { label: 'POTRERITO', value: 'POTRERITO' },
+  { label: 'SAN ANTONIO', value: 'SAN ANTONIO' },
+  { label: 'ROBLES', value: 'ROBLES' },
+  { label: 'TIMBA', value: 'TIMBA' },
+  { label: 'ROBLES NUEVO', value: 'ROBLES NUEVO' },
+  { label: 'QUINAMAYO', value: 'QUINAMAYO' },
+  { label: 'PASO DE LA BOLSA', value: 'PASO DE LA BOLSA' },
+  { label: 'SUR', value: 'SUR' },
+  { label: 'SAN MARCOS', value: 'SAN MARCOS' },
+  { label: 'DAPA', value: 'DAPA' },
+  { label: 'MULALO', value: 'MULALO' },
+  { label: 'MARBELLA', value: 'MARBELLA' },
+  { label: 'SANTAINES', value: 'SANTAINES' },
+]
+
+const dataSelectSubzona = [
+  { label: 'RURAL', value: 'RURAL' },
+  { label: 'CABECERA MUNICIPAL', value: 'CABECERA MUNICIPAL' },
+  { label: 'INDUSTRIAL', value: 'INDUSTRIAL' },
+  { label: 'ESTANCIA', value: 'ESTANCIA' },
+  { label: 'AMERICAS', value: 'AMERICAS' },
+]
+
+const dataSelectEstado = [
+  { label: 'Activo', value: 'A' },
+  { label: 'Inactivo', value: 'I' },
+]
+
+const SeleSupervisor =( { seleccionado, funSelect }: { seleccionado?: string, funSelect: (e: string) => void } ) => {
+  return (
+    <>
+      <Label htmlFor='SUPERVISOR'>Supervisor</Label>
+      <Select name='SUPERVISOR' value={seleccionado} onValueChange={funSelect}>
+        <SelectTrigger className='mt-2'>
+          <SelectValue placeholder={'Seleccionar'} />
+        </SelectTrigger>
+        <SelectContent>
+          {dataSelect.map((item, index) => (
+            <SelectItem key={index} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
+  )
+};
+
+SeleSupervisor.displayName = 'SeleSupervisor'
+
+const SelectCanal = ( { seleccionado, funSelect }: { seleccionado?: string, funSelect: (e: string) => void } ) => {
+  return (
+    <>
+      <Label htmlFor='CANAL'>Canal:</Label>
+      <Select name='CANAL' value={seleccionado} onValueChange={funSelect}>
+        <SelectTrigger className='mt-2'>
+          <SelectValue placeholder={'Seleccionar'} />
+        </SelectTrigger>
+        <SelectContent>
+          {dataSelectCanal.map((item, index) => (
+            <SelectItem key={index} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
+  )
+};
+
+SelectCanal.displayName = 'SelectCanal'
+
+const SelectCelula =( { seleccionado, funSelect }: { seleccionado?: string, funSelect: (e: string) => void } ) => {
+  return (
+    <>
+      <Label htmlFor='CELULA'>Célula:</Label>
+      <Select name='CELULA' value={seleccionado} onValueChange={funSelect}>
+        <SelectTrigger className='mt-2'>
+          <SelectValue placeholder={'Seleccionar'} />
+        </SelectTrigger>
+        <SelectContent>
+          {dataSelectCelula.map((item, index) => (
+            <SelectItem key={index} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
+  )
+};
+
+SelectCelula.displayName = 'SelectCelula'
+
+const SelectSubzona =( { seleccionado, funSelect }: { seleccionado?: string, funSelect: (e: string) => void }) => {
+  return (
+    <>
+      <Label htmlFor='SUBZONA'>Subzona:</Label>
+      <Select name='SUBZONA' value={seleccionado} onValueChange={funSelect}>
+        <SelectTrigger className='mt-2'>
+          <SelectValue placeholder={'Seleccionar'} />
+        </SelectTrigger>
+        <SelectContent>
+          {dataSelectSubzona.map((item, index) => (
+            <SelectItem key={index} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
+  )
+}
+
+SelectSubzona.displayName = 'SelectSubzona'
+
+const SelectEstado =( { seleccionado, funSelect }: { seleccionado?: string, funSelect: (e: string) => void }) => {
+  return (
+    <>
+      <Label htmlFor='ESTADO'>Estado:</Label>
+      <Select name='ESTADO' value={seleccionado} onValueChange={funSelect}>
+        <SelectTrigger className='mt-2'>
+          <SelectValue placeholder={'Seleccionar'} />
+        </SelectTrigger>
+        <SelectContent>
+          {dataSelectEstado.map((item, index) => (
+            <SelectItem key={index} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
+  )
+}
 
 export default function SucursalDetail() {
   const { codigo } = useParams<{ codigo: string }>()
 
   const [sucursal, setSucursal] = useState<SucursalPowerBi | undefined>(undefined)
-  
+
   const [reload, setReload] = useState(false)
 
   useEffect(() => {
@@ -31,12 +201,12 @@ export default function SucursalDetail() {
 
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries())
-  
+
     console.log(data);
 
     axios.post('/editarSucursalPB', { ...data, CODIGO: codigo })
       .then(res => {
-        if(res.status === 200){
+        if (res.status === 200) {
           console.log(res.data)
           toast.success('Sucursal actualizada correctamente',)
           setReload(!reload)
@@ -44,7 +214,6 @@ export default function SucursalDetail() {
       })
       .catch(err => console.log(err))
   }
-
 
   return (
     <section>
@@ -70,26 +239,10 @@ export default function SucursalDetail() {
         </div>
       </div>
       <form onSubmit={handleSubmit} className='bg-blue-200 p-2 rounded-md m-1 grid grid-cols-4 gap-y-4 gap-x-8'>
-        <label className='text-gray-700 font-semibold'>Supervisor:</label>
-        <select className='text-black' name='SUPERVISOR' id='SUPERVISOR' value={ sucursal?.SUPERVISOR} onChange={handleChange}>
-          <option value='ZONA CUMBRE'>ZONA CUMBRE</option>
-          <option value='ZONA 1'>ZONA 1</option>
-          <option value='ZONA 2'>ZONA 2</option>
-          <option value='ZONA VIJES'>ZONA VIJES</option>
-        </select>
+        <SeleSupervisor seleccionado={sucursal?.SUPERVISOR} funSelect={(e) => setSucursal({...sucursal!, SUPERVISOR: e})} />
 
-        <label className='text-gray-700 font-semibold'>Canal:</label>
-        <select className='text-black' name='CANAL' id='CANAL' value={ sucursal?.CANAL} onChange={handleChange}>
-          <option value='TAT'>TAT</option>
-          <option value='INDEPENDIENTE PUNTO'>INDEPENDIENTE PUNTO</option>
-          <option value='INDEPENDIENTE MOVIL'>INDEPENDIENTE MOVIL</option>
-          <option value='NOMINA PUNTO'>NOMINA PUNTO</option>
-          <option value='CAJAS'>CAJAS</option>
-          <option value='MOVIL INDEPENDIENTE'>MOVIL INDEPENDIENTE</option>
-          <option value='PARADERO'>PARADERO</option>
-          <option value='APP'>APP</option>
-          <option value='NOMINA MOVIL'>NOMINA MOVIL</option>
-        </select>
+        <SelectCanal seleccionado={sucursal?.CANAL} funSelect={(e) => setSucursal({ ...sucursal!, CANAL: e })} />
+
         <label className='text-gray-700 font-semibold'>Hora de Entrada:</label>
         <input
           type='time'
@@ -122,42 +275,10 @@ export default function SucursalDetail() {
           onChange={handleChange}
           className='border p-1 rounded-md text-black'
         />
-        <label className='text-gray-700 font-semibold'>Subzona:</label>
-        <select className='text-black' name='SUBZONA' id='SUBZONA' value={ sucursal?.SUBZONA} onChange={handleChange}>
-          <option value='RURAL'>RURAL</option>
-          <option value='CABECERA MUNICIPAL'>CABECERA MUNICIPAL</option>
-          <option value='INDUSTRIAL'>INDUSTRIAL</option>
-          <option value='ESTANCIA'>ESTANCIA</option>
-          <option value='AMERICAS'>AMERICAS</option>
-        </select>
-        <label className='text-gray-700 font-semibold'>Célula:</label>
-        <select className='text-black' name='CELULA' id='CELULA' value={ sucursal?.CELULA} onChange={handleChange}>
-          <option value='BITACO'>BITACO</option>
-          <option value='PAVAS'>PAVAS</option>
-          <option value='CENTRO'>CENTRO</option>
-          <option value='LOMITAS'>LOMITAS</option>
-          <option value='ALFAGUARA'>ALFAGUARA</option>
-          <option value='ORIENTE'>ORIENTE</option>
-          <option value='OCCIDENTE'>OCCIDENTE</option>
-          <option value='NORTE'>NORTE</option>
-          <option value='BONANZA'>BONANZA</option>
-          <option value='TERRANOVA'>TERRANOVA</option>
-          <option value='VILLAPAZ'>VILLAPAZ</option>
-          <option value='VENTURA'>VENTURA</option>
-          <option value='POTRERITO'>POTRERITO</option>
-          <option value='SAN ANTONIO'>SAN ANTONIO</option>
-          <option value='ROBLES'>ROBLES</option>
-          <option value='TIMBA'>TIMBA</option>
-          <option value='ROBLES NUEVO'>ROBLES NUEVO</option>
-          <option value='QUINAMAYO'>QUINAMAYO</option>
-          <option value='PASO DE LA BOLSA'>PASO DE LA BOLSA</option>
-          <option value='SUR'>SUR</option>
-          <option value='SAN MARCOS'>SAN MARCOS</option>
-          <option value='DAPA'>DAPA</option>
-          <option value='MULALO'>MULALO</option>
-          <option value='MARBELLA'>MARBELLA</option>
-          <option value='SANTAINES'>SANTAINES</option>
-        </select>
+        <SelectSubzona seleccionado={sucursal?.SUBZONA} funSelect={(e) => setSucursal({ ...sucursal!, SUBZONA: e })} />
+
+        <SelectCelula seleccionado={sucursal?.CELULA} funSelect={(e) => setSucursal({ ...sucursal!, CELULA: e })} />
+
         <label className='text-gray-700 font-semibold'>Horas Ordinarias:</label>
         <input
           type='text'
@@ -174,11 +295,9 @@ export default function SucursalDetail() {
           onChange={handleChange}
           className='border p-1 rounded-md text-black'
         />
-        <label className='text-gray-700 font-semibold'>Estado:</label>
-        <select className='text-black' name='ESTADO' id='ESTADO' value={ sucursal?.ESTADO} onChange={handleChange}>
-          <option value='A'>Activo</option>
-          <option value='I'>Inactivo</option>
-        </select>
+
+        <SelectEstado seleccionado={sucursal?.ESTADO} funSelect={(e) => setSucursal({ ...sucursal!, ESTADO: e })} />
+
         <button type='submit' className='mt-4 bg-blue-500 text-white p-2 rounded-md'>Actualizar</button>
       </form>
     </section>
