@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { SucursalPowerBi } from '../types/interfaces';
-import { RiEditLine } from '@remixicon/react';
 import { useNavigate } from 'react-router-dom';
+import { RiEditLine } from '@remixicon/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 

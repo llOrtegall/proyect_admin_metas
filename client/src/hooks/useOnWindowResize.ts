@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
 // Tremor useOnWindowResize [v0.0.0]
 export const useOnWindowResize = (handler: { (): void }) => {
@@ -7,8 +7,8 @@ export const useOnWindowResize = (handler: { (): void }) => {
       handler()
     }
     handleResize()
-    window.addEventListener("resize", handleResize)
+    window.addEventListener('resize', handleResize)
 
-    return () => window.removeEventListener("resize", handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [handler])
 }

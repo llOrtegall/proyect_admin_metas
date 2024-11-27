@@ -2,6 +2,7 @@ import { SucursalPowerBi } from '../types/interfaces'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 export default function SucursalDetail() {
   const { codigo } = useParams<{ codigo: string }>()
@@ -37,7 +38,7 @@ export default function SucursalDetail() {
       .then(res => {
         if(res.status === 200){
           console.log(res.data)
-          alert('Sucursal actualizada correctamente')
+          toast.success('Sucursal actualizada correctamente',)
           setReload(!reload)
         }
       })

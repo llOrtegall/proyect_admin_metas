@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export interface Logueo {

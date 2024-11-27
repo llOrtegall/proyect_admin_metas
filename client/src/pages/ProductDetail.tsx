@@ -1,7 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, TableRow } from "../components/Table";
+import { Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface Product {
   codigo: number;
@@ -28,7 +28,7 @@ function ProductDetail() {
 
   return (
     <section className=''>
-      <div className="h-[92vh] overflow-y-auto">
+      <div className='h-[92vh] overflow-y-auto'>
         <Table>
           <TableHead>
             <TableRow>
@@ -52,12 +52,12 @@ function ProductDetail() {
                     </>
                   )
                 }
-                <TableCell>$ {Intl.NumberFormat("es-CO").format(item.venta).toString()}</TableCell>
+                <TableCell>$ {Intl.NumberFormat('es-CO').format(item.venta).toString()}</TableCell>
                 {
                   item.Sucursal && (
                     <>
                       <TableCell>{item.Sucursal.categoria}</TableCell>
-                      <TableCell className="text-center">{item.Sucursal.version}</TableCell>
+                      <TableCell className='text-center'>{item.Sucursal.version}</TableCell>
                     </>
                   )
                 }
@@ -70,10 +70,10 @@ function ProductDetail() {
         <TableFoot>
           <TableRow>
             <TableCell>{data.length} Sucursales</TableCell>
-            <TableCell>Producto: <span className="pl-1">{name || 'undefined'}</span></TableCell>
+            <TableCell>Producto: <span className='pl-1'>{name || 'undefined'}</span></TableCell>
             <TableHeaderCell colSpan={2}>
               Total:
-              <span className="pl-2">$ {Intl.NumberFormat("es-CO").format(data.reduce((acc, item) => acc + item.venta, 0)).toString()}</span>
+              <span className='pl-2'>$ {Intl.NumberFormat('es-CO').format(data.reduce((acc, item) => acc + item.venta, 0)).toString()}</span>
             </TableHeaderCell>
           </TableRow>
         </TableFoot>

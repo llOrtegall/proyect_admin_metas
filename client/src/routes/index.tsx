@@ -1,16 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Root from './Root';
-
-import Dashboard from '../pages/Dashboard';
-import Detalles from '../pages/Detalles';
-import ProductDetail from '../pages/ProductDetail';
-import VentaHora from '../pages/VentaHora';
-import NotFound from '../pages/NotFound';
-import Sugeridos from '../pages/Sugeridos';
-import UsuariosLogueados from '../pages/UsuariosLog';
-import SucursalesPage from '../pages/Sucursales';
 import SucursalDetail from '../pages/SucursalDetail';
+import UsuariosLogueados from '../pages/UsuariosLog';
+import ProductDetail from '../pages/ProductDetail';
+import SucursalesPage from '../pages/Sucursales';
+import Dashboard from '../pages/Dashboard';
+import VentaHora from '../pages/VentaHora';
+import Sugeridos from '../pages/Sugeridos';
+import Detalles from '../pages/Detalles';
+import NotFound from '../pages/NotFound';
+import Root from './Root';
 
 const Router = createBrowserRouter([
   {
