@@ -46,9 +46,9 @@ export default function SucursalDetail() {
   }
 
   return (
-    <section>
+    <section className='space-y-1 px-1 py-1'>
 
-      <Card className='flex m-1 justify-around border-t-4 border-blue-500'>
+      <Card className='flex justify-around border-t-4 border-blue-500'>
         <p className='text-gray-700 font-semibold'>
           Sucursal:
           <Badge variant='warning'>
@@ -69,7 +69,7 @@ export default function SucursalDetail() {
         </p>
       </Card >
 
-      <Card className='m-1 border-t-4 border-blue-500 grid grid-cols-2 gap-1'>
+      <Card className='border-t-4 border-blue-500 grid grid-cols-2 gap-1'>
         <p className='text-gray-700'><span className='font-semibold'>Centro de Costo:</span> {sucursal?.CCOSTO}</p>
         <p className='text-gray-700'><span className='font-semibold'>Dirección:</span> {sucursal?.DIRECCION}</p>
         <p className='text-gray-700'><span className='font-semibold'>Supervisor:</span> {sucursal?.SUPERVISOR}</p>
@@ -82,8 +82,8 @@ export default function SucursalDetail() {
         <p className='text-gray-700'><span className='font-semibold'>Estado:</span> {sucursal?.ESTADO}</p>
       </Card>
 
-      <Card className='flex m-1 justify-around border-t-4 border-blue-500'>
-        <form onSubmit={handleSubmit} className='bg-blue-100 px-12 py-6 grid grid-cols-4 gap-4 m-1 rounded-md'>
+      <Card className='flex justify-around border-t-4 border-blue-500'>
+        <form onSubmit={handleSubmit} className='bg-blue-100 px-12 py-6 grid grid-cols-4 gap-4 rounded-md'>
           <SelectSupervisor
             key='SUPERVISOR_01'
             seleccionado={sucursal?.SUPERVISOR}
