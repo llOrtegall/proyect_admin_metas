@@ -2,9 +2,12 @@ import { SucursalesPowerBi } from '../model/sucpowerbi.model';
 import { Request, Response } from 'express';
 
 export const getSucursalesPowerBi = async (req: Request, res: Response) => {
+  const param = req.query;
+  const zona = param.zona as string;
+
   try {
     const sucursales = await SucursalesPowerBi.findAll({
-      where: { ZONA: '39627' }
+      where: { ZONA: zona }
     });
 
     console.log(sucursales.length);

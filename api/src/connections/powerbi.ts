@@ -11,4 +11,5 @@ export const PowerBI = new Sequelize(DB_POWERBI, USER_POWERBI, PASS_POWERBI, {
   port: parseInt(PORT_POWERBI),
   dialect: 'mysql',
   timezone: '-05:00',
+  logging: false
 });
