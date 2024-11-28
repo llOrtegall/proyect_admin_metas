@@ -10,6 +10,8 @@ services:
     volumes:
       - ./config:/etc/nginx/conf.d
       - ./client/dist:/usr/share/nginx/html
+    networks:
+      - red-gane-int
 
   api_adm_metas:
     build: ./api
@@ -18,3 +20,9 @@ services:
     environment:
       - TZ=America/Bogota
     restart: always
+    networks:
+      - red-gane-int
+      
+networks:
+  red-gane-int:
+    external: true
