@@ -3,6 +3,7 @@ import NavBar from '../components/NavBar';
 import { Toaster } from 'sonner';
 
 function Root (){
+
   return(
     <section className='flex h-screen w-full dark:bg-slate-800'>
       <NavBar />
