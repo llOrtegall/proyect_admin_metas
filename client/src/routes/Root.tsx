@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthProvider';
 import LoginPage from '../pages/LoginPage';
 
 function Root (){
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   if(!isAuthenticated){
     return <LoginPage />

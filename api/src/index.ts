@@ -13,7 +13,10 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:5173'
+}))
 
 app.use('/api', RouterMetas)
 app.use('/api', SugeridosRouter)

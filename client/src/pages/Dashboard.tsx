@@ -1,4 +1,5 @@
 import { ProgressCircle } from '../components/ProgressCircle';
+import { URL_API_DATA } from '../utils/constants';
 import { ProgressBar } from '../components/ProgressBar';
 import { ResponseProducts } from '../types/interfaces';
 import { DonutChart } from '../components/DonutChart';
@@ -21,7 +22,7 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchData = () => {
-      axios.get('/metas')
+      axios.get(`${URL_API_DATA}/metas`)
         .then(res => {
           setData(res.data);
         })
