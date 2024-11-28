@@ -6,13 +6,16 @@ import { StrictMode } from 'react'
 import Router from './routes'
 import axios from 'axios'
 import './index.css'
+import { AuthProvider } from './contexts/AuthProvider'
 
 axios.defaults.withCredentials = true;
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <RouterProvider router={Router} />
+      <AuthProvider>
+        <RouterProvider router={Router} />
+      </AuthProvider>
     </ThemeProvider>
   </StrictMode>,
 )
