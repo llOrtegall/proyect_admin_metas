@@ -13,8 +13,8 @@ services:
 
   api_adm_metas:
     build: ./api
-    container_name: api_adm_metas
     image: api_adm_metas:v.1.0
+    container_name: api_adm_metas
     environment:
       - TZ=America/Bogota
     restart: always
