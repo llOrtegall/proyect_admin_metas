@@ -1,35 +1,32 @@
 import { RiUserLine, RiLockLine } from '@remixicon/react'
+import { URL_API_LOGIN, APP_NAME} from '../utils/constants'
+import { useAuth } from '../contexts/AuthProvider'
 import { Button } from '../components/Button'
 import { Input } from '../components/Input'
-// import { getLogin } from '../services/LoginServices'
-// import { useAuth } from '../auth/AuthContext'
 import { Toaster, toast } from 'sonner'
 import { FormEvent } from 'react'
+import axios from 'axios'
 
 function LoginPage() {
-  // const { login } = useAuth()
+  const { setIsAuthenticated } = useAuth()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    const form = e.target as HTMLFormElement;
+    const username = form.username.value;
+    const password = form.password.value;
 
-    /*
-    const form = e.target as HTMLFormElement
-
-    const username = form.username.value
-    const password = form.password.value
-
-    
-    getLogin({ username, password })
-      .then(res => {
-        if (res.auth === true) {
-          login(res.token)
-        }
+    axios.post(`${URL_API_LOGIN}/login`, { username, password, app: APP_NAME })
+      .then((res) => {
+        if(res.status === 200){
+          setIsAuthenticated(true)
+        } 
       })
-      .catch(err => {
-        const message = err.response.data.message
-        toast.error(message, { description: 'Hubo un problema al iniciar sesión' })
+      .catch((error) => {
+        console.log('error', error)
+        toast.error('Usuario o contraseña incorrectos', { description: 'Por favor, intenta de nuevo' })
       })
-        */
+
   }
 
   return (
