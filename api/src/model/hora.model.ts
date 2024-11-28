@@ -1,47 +1,41 @@
-import { horaConnection } from '../connections/horas';
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize'
+import { horaConnection } from '../connections/horas'
 
-interface HoraAttributes {
-  id?: number;
-  sucursal: number;
-  zona: number;
-  fecha: Date;
-  hora: Date;
-  chance: number;
-  gane5: number;
-  astro: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  asp?: number;
-  venta?: number;
+class MetaHora extends Model<InferAttributes<MetaHora>, InferCreationAttributes<MetaHora>> {
+  declare ID?: number;
+  declare FECHA?: Date;
+  declare HORA?: string;
+  declare SUCURSAL: number;
+  declare CHANCE: number;
+  declare PAGAMAS: number;
+  declare PAGATODO: number;
+  declare GANE5: number;
+  declare ASTRO: number;
 }
 
-type HoraCreationAttributes = Optional<HoraAttributes, 'id' | 'createdAt' | 'updatedAt'>;
-
-export class Hora extends Model<HoraAttributes, HoraCreationAttributes> implements HoraAttributes {
-  declare id: number;
-  declare sucursal: number;
-  declare zona: number;
-  declare fecha: Date;
-  declare hora: Date;
-  declare chance: number;
-  declare gane5: number;
-  declare astro: number;
-
-  declare readonly createdAt: Date;
-  declare readonly updatedAt: Date;
-}
-
-Hora.init({
-  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-  sucursal: { type: DataTypes.INTEGER, allowNull: false },
-  zona: { type: DataTypes.INTEGER, allowNull: false },
-  fecha: { type: DataTypes.DATE, allowNull: false },
-  hora: { type: DataTypes.DATE, allowNull: false },
-  chance: { type: DataTypes.INTEGER, allowNull: false },
-  gane5: { type: DataTypes.INTEGER, allowNull: false },
-  astro: { type: DataTypes.INTEGER, allowNull: false },
+MetaHora.init({
+  ID: { type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true },
+  FECHA: { type: DataTypes.DATEONLY, allowNull: false, defaultValue: DataTypes.NOW },
+  HORA: { type: DataTypes.TIME, allowNull: false, defaultValue: DataTypes.NOW },
+  SUCURSAL: { type: DataTypes.INTEGER, allowNull: false },
+  CHANCE: { type: DataTypes.INTEGER, allowNull: false },
+  PAGAMAS: { type: DataTypes.INTEGER, allowNull: false },
+  PAGATODO: { type: DataTypes.INTEGER, allowNull: false },
+  GANE5: { type: DataTypes.INTEGER, allowNull: false },
+  ASTRO: { type: DataTypes.INTEGER, allowNull: false }
 }, {
   sequelize: horaConnection,
-  tableName: 'Meta'
-});
+  tableName: 'VENTA_HORAS',
+  timestamps: false,
+  indexes: [
+    {
+      fields: ['FECHA']
+    },
+    {
+      fields: ['SUCURSAL']
+    }
+  ]
+
+},)
+
+export { MetaHora }

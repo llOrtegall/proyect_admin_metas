@@ -1,9 +1,9 @@
+import { Sucursal } from '../model/sucursales.model';
+import { MetaHora } from '../model/hora.model';
 import { Request, Response } from 'express';
 import { Meta } from '../model/metas.model';
-import { fn, Op } from 'sequelize';
 import { faker } from '@faker-js/faker';
-import { Sucursal } from '../model/sucursales.model';
-import { Hora } from '../model/hora.model';
+import { fn, Op } from 'sequelize';
 
 const productDefinitions = [
   { key: 'chance', name: 'Chance', metaKey: 'meta_dia_chance' },
@@ -244,33 +244,6 @@ export const getProductDetailController = async (req: Request, res: Response) =>
   }
 }
 
-interface VentaHora {
-  id: number;
-  hora: string;
-  venta: number | null;
-  asp: number;
-}
-
-const baseHora: VentaHora[] = [
-  { id: 1, hora: '06:00:00', venta: 0, asp: 0 },
-  { id: 2, hora: '07:00:00', venta: 0, asp: 10000 },
-  { id: 3, hora: '08:00:00', venta: 0, asp: 63000 },
-  { id: 4, hora: '09:00:00', venta: 0, asp: 100000 },
-  { id: 5, hora: '10:00:00', venta: 0, asp: 220000 },
-  { id: 6, hora: '11:00:00', venta: 0, asp: 450000 },
-  { id: 7, hora: '12:00:00', venta: 0, asp: 500000 },
-  { id: 8, hora: '13:00:00', venta: 0, asp: 450000 },
-  { id: 9, hora: '14:00:00', venta: 0, asp: 320000 },
-  { id: 10, hora: '15:00:00', venta: 0, asp: 120000 },
-  { id: 11, hora: '16:00:00', venta: 0, asp: 80000 },
-  { id: 12, hora: '17:00:00', venta: 0, asp: 40000 },
-  { id: 13, hora: '18:00:00', venta: 0, asp: 20000 },
-  { id: 14, hora: '19:00:00', venta: 0, asp: 10000 },
-  { id: 15, hora: '20:00:00', venta: 0, asp: 2000 },
-  { id: 16, hora: '21:00:00', venta: 0, asp: 1000 },
-  { id: 17, hora: '22:00:00', venta: 0, asp: 0 }
-];
-
 export const getVentaHoraController = async (req: Request, res: Response) => {
   const { codigo } = req.params;
 
@@ -279,25 +252,44 @@ export const getVentaHoraController = async (req: Request, res: Response) => {
   }
 
   try {
-    const result = await Hora.findAll({
-      attributes: ['id', 'hora', ['chance', 'venta']],
+    const results = await MetaHora.findAll({
+      attributes: ['ID', 'HORA', 'CHANCE'],
       where: {
-        sucursal: { [Op.eq]: codigo },
-        fecha: { [Op.eq]: fn('CURDATE') }
-      }
+        FECHA: { [Op.eq]: fn('CURDATE') },
+        SUCURSAL: { [Op.eq]: codigo }
+      },
+      raw: true
     });
 
-    const base = baseHora.map((hora) => {
-      const ventaHora = result.find(r => r.dataValues.hora.toString() === hora.hora.toString());
+    const pantillaVentaHora = [
+      { HORA: '06:00:00', ASP: 0 },
+      { HORA: '07:00:00', ASP: 10000 },
+      { HORA: '08:00:00', ASP: 30000 },
+      { HORA: '09:00:00', ASP: 50000 },
+      { HORA: '10:00:00', ASP: 25000 },
+      { HORA: '11:00:00', ASP: 15000 },
+      { HORA: '12:00:00', ASP: 18000 },
+      { HORA: '13:00:00', ASP: 30000 },
+      { HORA: '14:00:00', ASP: 25000 },
+      { HORA: '15:00:00', ASP: 21000 },
+      { HORA: '16:00:00', ASP: 20000 },
+      { HORA: '17:00:00', ASP: 19000 },
+      { HORA: '18:00:00', ASP: 16000 },
+      { HORA: '19:00:00', ASP: 52000 },
+      { HORA: '20:00:00', ASP: 50000 },
+      { HORA: '21:00:00', ASP: 20000 },
+      { HORA: '22:00:00', ASP: 10000 },
+    ]
+
+    const metas = results.map((r) => {
+      const meta = pantillaVentaHora.find(p => p.HORA === r.HORA);
       return {
-        id: hora.id,
-        hora: hora.hora,
-        venta: ventaHora ? ventaHora.dataValues.venta : null,
-        asp: hora.asp
+        ...r,
+        ASP: meta?.ASP || 0
       };
     });
 
-    res.status(200).json(base);
+    return res.status(200).json(metas);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Error al obtener la venta por hora' });

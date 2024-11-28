@@ -9,7 +9,7 @@ import { Label } from '../components/Label';
 import { Badge } from '../components/Badge';
 import { Input } from '../components/Input';
 
-export default function SucursalesPage () {
+export default function SucursalesPage() {
   const [sucursales, setSucursales] = useState<SucursalPowerBi[]>([]);
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
@@ -31,21 +31,19 @@ export default function SucursalesPage () {
       <Card className='flex text-black items-center justify-around border-blue-400 border-t-4 py-2'>
 
         <div className='flex items-center gap-2'>
-          <Label className=''>Sucursal:</Label>
-          <Input 
-            type='search' 
-            value={search} 
+          <Label className='font-semibold'>Sucursal:</Label>
+          <Input
+            type='search'
+            value={search}
             onChange={e => setSearch(e.target.value)} placeholder='3984** | Punto 25 ****'
           />
         </div>
 
         <div className='flex items-center gap-2'>
-         <Label>
-          N° Sucursales:
-         </Label>
-         <Badge variant='warning'>
-          {sucursalesFiltered.length}
-         </Badge>
+          <Label className='font-semibold'>N° Sucursales:</Label>
+          <Badge variant='warning'>
+            {sucursalesFiltered.length}
+          </Badge>
         </div>
       </Card>
 
@@ -74,7 +72,11 @@ export default function SucursalesPage () {
                 <TableCell>{sucursal.CATEGORIA}</TableCell>
                 <TableCell>{sucursal.ESTADO}</TableCell>
                 <TableCell>
-                  <button onClick={() => navigate(`/Sucursal/${sucursal.CODIGO}`)} className='bg-yellow-200 rounded-md px-2 py-1' title='Editar sucursal'>
+                  <button
+                    onClick={() => navigate(`/Sucursal/${sucursal.CODIGO}`)}
+                    className='bg-yellow-200 rounded-md px-2 py-1 hover:bg-green-200'
+                    title='Editar sucursal'
+                  >
                     <RiEditLine />
                   </button>
                 </TableCell>
@@ -83,7 +85,7 @@ export default function SucursalesPage () {
           </TableBody>
         </Table>
       </div>
-      
+
     </section>
   );
 }

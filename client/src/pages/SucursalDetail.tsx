@@ -70,16 +70,16 @@ export default function SucursalDetail() {
       </Card >
 
       <Card className='border-t-4 border-blue-500 grid grid-cols-2 gap-1'>
-        <p className='text-gray-700'><span className='font-semibold'>Centro de Costo:</span> {sucursal?.CCOSTO}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Dirección:</span> {sucursal?.DIRECCION}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Supervisor:</span> {sucursal?.SUPERVISOR}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Subzona:</span> {sucursal?.SUBZONA}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Célula:</span> {sucursal?.CELULA}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Dispositivo:</span> {sucursal?.DISPOSITIVO}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Tipo:</span> {sucursal?.TIPO}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Canal:</span> {sucursal?.CANAL}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Categoría:</span> {sucursal?.CATEGORIA}</p>
-        <p className='text-gray-700'><span className='font-semibold'>Estado:</span> {sucursal?.ESTADO}</p>
+        <p className='text-gray-700'>Centro de Costo: <Badge variant='warning'>{sucursal?.CCOSTO}</Badge> </p>
+        <p className='text-gray-700'>Dirección: <Badge variant='warning'>{sucursal?.DIRECCION}</Badge></p>
+        <p className='text-gray-700'>Supervisor: <Badge variant='warning'>{sucursal?.SUPERVISOR}</Badge></p>
+        <p className='text-gray-700'>Subzona: <Badge variant='warning'>{sucursal?.SUBZONA}</Badge></p>
+        <p className='text-gray-700'>Célula: <Badge variant='warning'>{sucursal?.CELULA}</Badge></p>
+        <p className='text-gray-700'>Dispositivo: <Badge variant='warning'>{sucursal?.DISPOSITIVO}</Badge></p>
+        <p className='text-gray-700'>Tipo: <Badge variant='warning'>{sucursal?.TIPO}</Badge></p>
+        <p className='text-gray-700'>Canal: <Badge variant='warning'>{sucursal?.CANAL}</Badge></p>
+        <p className='text-gray-700'>Categoría: <Badge variant='warning'>{sucursal?.CATEGORIA}</Badge></p>
+        <p className='text-gray-700'>Estado: <Badge variant='warning'>{sucursal?.ESTADO}</Badge></p>
       </Card>
 
       <Card className='flex justify-around border-t-4 border-blue-500'>

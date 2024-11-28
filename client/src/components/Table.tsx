@@ -78,7 +78,7 @@ const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<
   (
     <td ref={forwardedRef} className={cx(
       // base
-      'p-2 2xl:p-4 text-xs 2xl:text-sm 3xl:text-base text-center',
+      'p-2 2xl:p-1 text-xs 2xl:text-sm 3xl:text-base text-center',
       // text color
       'text-gray-600 dark:text-gray-400',
       className,

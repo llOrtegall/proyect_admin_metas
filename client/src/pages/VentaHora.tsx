@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface VentaHora {
-  id: number;
-  hora: string;
-  venta: number;
-  asp?: number;
+  ID: number;
+  HORA: string;
+  CHANCE: number;
+  ASP: number;
 }
 
 function VentaHora() {
@@ -20,12 +20,18 @@ function VentaHora() {
       .catch(err => console.error(err));
   }, [codigo]);
 
+
   return (
-    <div className="flex flex-col gap-16 items-center justify-center h-[90vh]">
-      <AreaChart type={'default'} className="h-72" data={data}
-        index="hora" categories={["venta", "asp"]} showLegend={false}
-        colors={['emerald', 'yellow']}
-      />
+    <div className='flex flex-col gap-16 items-center justify-center h-[90vh]'>
+      {
+        data !== undefined
+          ? (
+            <AreaChart type={'default'} className='h-72' data={data}
+              index='HORA' categories={['ASP', 'CHANCE']} 
+            />
+          )
+          : <p>Nada No Cargada...</p>
+      }
     </div>
   )
 }

@@ -32,6 +32,7 @@ function ProductDetail() {
         <Table>
           <TableHead>
             <TableRow>
+              <TableHeaderCell>N°</TableHeaderCell>
               <TableHeaderCell>Nombre</TableHeaderCell>
               <TableHeaderCell>Dirección</TableHeaderCell>
               <TableHeaderCell>Ventas ($)</TableHeaderCell>
@@ -40,10 +41,11 @@ function ProductDetail() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item) => (
+            {data.map((item, index) => (
               <TableRow key={item.codigo} className={name === 'Chance' ? 'hover:bg-yellow-100 cursor-pointer' : ''}
                 onClick={() => name === 'Chance' ? navigate(`/ventaHora/${item.codigo}`) : ''}
-                >
+              >
+                <TableCell>{index + 1}</TableCell>
                 {
                   item.Sucursal && (
                     <>
