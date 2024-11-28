@@ -1,11 +1,22 @@
 import { RiHome2Line, RiMenu2Line, RiFileChartLine, RiStore3Line } from '@remixicon/react'
+import { URL_API_LOGIN } from '../utils/constants';
+import { useAuth } from '../contexts/AuthProvider';
 import { NavLink } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
+import { Button } from './Button';
 import { Card } from './Card';
-import { useAuth } from '../contexts/AuthProvider';
+import axios from 'axios';
 
 function NavBar() {
-  const { empresa } = useAuth();
+  const { empresa, setIsAuthenticated } = useAuth();
+  const handleLogout = () => {
+    axios.post(`${URL_API_LOGIN}/logout`)
+      .then((res) => {
+        console.log(res)
+        setIsAuthenticated(false)
+      })
+      .catch((err) => console.log(err))
+  };
 
   return (
     <nav className='flex flex-col bg-slate-200 dark:bg-gray-900 w-2/12 border-r space-y-2 border-slate-600 text-black dark:text-white'>
@@ -43,6 +54,11 @@ function NavBar() {
       </ul>
       <ul className='flex items-center justify-center pb-2'>
         <ThemeToggle />
+      </ul>
+      <ul className='flex items-center justify-center pb-2'>
+        <Button onClick={() => handleLogout()}>
+          Cerrar Sesión
+        </Button>
       </ul>
     </nav>
   );
