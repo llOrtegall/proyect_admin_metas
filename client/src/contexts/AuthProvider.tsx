@@ -8,6 +8,8 @@ interface IAuthContext {
   user: User
   setUser: Dispatch<SetStateAction<User>>
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>
+  empresa: 'Multired' | 'Servired' | 'MultiredYServired'
+  setEmpresa: Dispatch<SetStateAction<'Multired' | 'Servired' | 'MultiredYServired'>>
 }
 
 const InitialUser: User = { username: '', email: '', names: '', lastnames: '', company: '', process: '', sub_process: '', id: '' }
@@ -16,6 +18,7 @@ const AuthContext = createContext<IAuthContext | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>(InitialUser)
+  const [empresa, setEmpresa] = useState<'Multired' | 'Servired' | 'MultiredYServired'>('MultiredYServired')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
@@ -43,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [isAuthenticated])
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, empresa, setEmpresa }}>
       {children}
     </AuthContext.Provider>
   )
