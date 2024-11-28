@@ -3,6 +3,7 @@ import ExcelData from '../components/ExportExcel';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { URL_API_DATA } from '../utils/constants';
+import { useAuth } from '../contexts/AuthProvider';
 
 export interface Sugerido {
   sucursal: number
@@ -19,19 +20,22 @@ function Sugeridos() {
   const [sugeridos, setSugeridos] = useState<Sugerido[]>([]);
   const [fecha, setFecha] = useState<string>('');
   const [filter, setFilter] = useState<string>('');
+  const { empresa } = useAuth();
+
+  const company = empresa === 'Multired' ? 39627 : 39628;
 
   useEffect(() => {
-    axios.get(`${URL_API_DATA}/sugeridos?fecha=${fecha}`)
+    axios.get(`${URL_API_DATA}/sugeridos?fecha=${fecha}`, { params: { zona: company}})
       .then(response => setSugeridos(response.data))
       .catch(error => console.log(error));
-  }, [fecha]);
+  }, [fecha, company]);
 
   const dataFiltered = sugeridos.filter(sug => sug.sucursal.toString().includes(filter))
 
   return (
     <section className='text-black'>
       <div className='flex items-center justify-around bg-slate-200 px-4 py-2 rounded-t-md'>
-        <h1 className='text-xs 2xl:text-lg 3xl:text-xl font-bold'>Cumplimiento Sugeridos Multired</h1>
+        <h1 className='text-xs 2xl:text-lg 3xl:text-xl font-bold'>Cumplimiento Sugeridos { company === 39627 ? 'Multired' : '' } { company === 39628 ? 'Servired' : '' }</h1>
         <div>
           <label className='text-xs 2xl:text-sm 3xl:text-lg'>Sucursal:</label>
           <input type='search' className='text-xs 2xl:text-sm 3xl:text-lg border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)}/>

@@ -1,5 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { SucursalPowerBi } from '../types/interfaces';
+import { useAuth } from '../contexts/AuthProvider';
 import { URL_API_DATA } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { RiEditLine } from '@remixicon/react';
@@ -12,18 +13,21 @@ import axios from 'axios';
 
 export default function SucursalesPage() {
   const [sucursales, setSucursales] = useState<SucursalPowerBi[]>([]);
+  const { empresa } = useAuth();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
 
+  const company = empresa === 'Multired' ? 39627 : 39628;
+
   useEffect(() => {
-    axios.get(`${URL_API_DATA}/sucursalesPB`)
+    axios.get(`${URL_API_DATA}/sucursalesPB`, { params: { zona: company } })
       .then(res => {
         setSucursales(res.data);
       })
       .catch(err => {
         console.error(err);
       });
-  }, []);
+  }, [company]);
 
   const sucursalesFiltered = sucursales.filter(suc => suc.CODIGO.toLowerCase().includes(search))
 

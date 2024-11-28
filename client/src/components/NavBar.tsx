@@ -2,14 +2,17 @@ import { RiHome2Line, RiMenu2Line, RiFileChartLine, RiStore3Line } from '@remixi
 import { NavLink } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import { Card } from './Card';
+import { useAuth } from '../contexts/AuthProvider';
 
 function NavBar() {
+  const { empresa } = useAuth();
+
   return (
     <nav className='flex flex-col bg-slate-200 dark:bg-gray-900 w-2/12 border-r space-y-2 border-slate-600 text-black dark:text-white'>
       <figure className='px-0.5 py-0.5 mb-2 text-xs 2xl:text-sm 3xl:text-xl pt-2'>
         <Card className='flex items-center p-3 gap-2 hover:bg-indigo-700/20 cursor-pointer transition-all'>
           <span className='bg-indigo-900 py-2 px-3 rounded-md text-white'>GE</span>
-          <p className='text-center'>Metas Admin Multired</p>
+          <p className='text-center'>Metas Admin {empresa}</p>
         </Card>
       </figure>
       <ul className='flex flex-col gap-2 flex-1 text-xs 2xl:text-sm 3xl:text-lg' >
