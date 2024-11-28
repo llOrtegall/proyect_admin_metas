@@ -2,6 +2,7 @@ import { Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, Tab
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { URL_API_DATA } from '../utils/constants';
 
 interface Product {
   codigo: number;
@@ -21,7 +22,7 @@ function ProductDetail() {
 
 
   useEffect(() => {
-    axios.get(`/product/${name}`)
+    axios.get(`${URL_API_DATA}/product/${name}`)
       .then(res => setData(res.data))
       .catch(err => console.error(err));
   }, [name]);

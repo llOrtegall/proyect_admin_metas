@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { URL_API_DATA } from '../utils/constants';
 
 export interface Logueo {
   username: string;
@@ -13,7 +14,7 @@ function UsuariosLogueados () {
   const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
-    axios.get(`/logueo?fecha=${fecha}`)
+    axios.get(`${URL_API_DATA}/logueo?fecha=${fecha}`)
       .then(response => setLogueo(response.data))
       .catch(error => console.log(error));
   }, [fecha]);

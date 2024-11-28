@@ -2,6 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 import ExcelData from '../components/ExportExcel';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { URL_API_DATA } from '../utils/constants';
 
 export interface Sugerido {
   sucursal: number
@@ -20,7 +21,7 @@ function Sugeridos() {
   const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
-    axios.get(`/sugeridos?fecha=${fecha}`)
+    axios.get(`${URL_API_DATA}/sugeridos?fecha=${fecha}`)
       .then(response => setSugeridos(response.data))
       .catch(error => console.log(error));
   }, [fecha]);

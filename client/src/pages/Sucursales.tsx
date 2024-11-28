@@ -1,13 +1,14 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { SucursalPowerBi } from '../types/interfaces';
+import { URL_API_DATA } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { RiEditLine } from '@remixicon/react';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Card } from '../components/Card';
 import { Label } from '../components/Label';
-import { Badge } from '../components/Badge';
 import { Input } from '../components/Input';
+import { useEffect, useState } from 'react';
+import { Badge } from '../components/Badge';
+import { Card } from '../components/Card';
+import axios from 'axios';
 
 export default function SucursalesPage() {
   const [sucursales, setSucursales] = useState<SucursalPowerBi[]>([]);
@@ -15,7 +16,7 @@ export default function SucursalesPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/sucursalesPB')
+    axios.get(`${URL_API_DATA}/sucursalesPB`)
       .then(res => {
         setSucursales(res.data);
       })

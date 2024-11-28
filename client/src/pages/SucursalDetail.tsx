@@ -1,11 +1,12 @@
 import { SelectSupervisor, SelectCanal, SelectCelula, SelectEstado, SelectSubzona } from '../components/SelectsDetailSucursal'
 import { SucursalPowerBi } from '../types/interfaces'
+import { URL_API_DATA } from '../utils/constants'
 import { useParams } from 'react-router-dom'
+import { Badge } from '../components/Badge'
 import { useEffect, useState } from 'react'
+import { Card } from '../components/Card'
 import { toast } from 'sonner'
 import axios from 'axios'
-import { Card } from '../components/Card'
-import { Badge } from '../components/Badge'
 
 
 export default function SucursalDetail() {
@@ -16,7 +17,7 @@ export default function SucursalDetail() {
   const [reload, setReload] = useState(false)
 
   useEffect(() => {
-    axios.get(`/sucursalPB/${codigo}`)
+    axios.get(`${URL_API_DATA}/sucursalPB/${codigo}`)
       .then(res => setSucursal(res.data))
       .catch(err => console.log(err))
   }, [codigo, reload])
@@ -34,7 +35,7 @@ export default function SucursalDetail() {
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries())
 
-    axios.post('/editarSucursalPB', { ...data, CODIGO: codigo })
+    axios.post(`${URL_API_DATA}/editarSucursalPB`, { ...data, CODIGO: codigo })
       .then(res => {
         if (res.status === 200) {
           console.log(res.data)

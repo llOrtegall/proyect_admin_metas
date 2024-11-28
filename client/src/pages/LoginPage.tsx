@@ -35,10 +35,10 @@ function LoginPage() {
 
       <form className='w-96 mb-2 p-12 rounded-lg bg-transparent/10 flex flex-col gap-4 shadow-xl' onSubmit={handleSubmit}>
         <figure className='flex justify-center'>
-          <img src='/logogane.webp' alt='Logo Gane' width={180} />
+          <img src='/gane.webp' alt='Logo Gane' width={180} />
         </figure>
 
-        <article className='w-full flex flex-col'>
+        <article className='w-full flex flex-col text-black'>
           <label className='font-semibold'>Usuario</label>
           <div className='flex items-center'>
             <RiUserLine />
@@ -53,7 +53,7 @@ function LoginPage() {
           </div>
         </article>
 
-        <article className='w-full flex flex-col'>
+        <article className='w-full flex flex-col text-black'>
           <label className='font-semibold'>Contraseña</label>
           <div className='flex items-center'>
             <RiLockLine />

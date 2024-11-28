@@ -2,6 +2,7 @@ import { AreaChart } from '../components/ChartUtils';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { URL_API_DATA } from '../utils/constants';
 
 interface VentaHora {
   ID: number;
@@ -15,7 +16,7 @@ function VentaHora() {
   const [data, setData] = useState<VentaHora[]>([]);
 
   useEffect(() => {
-    axios.get(`/ventaHora/${codigo}`)
+    axios.get(`${URL_API_DATA}/ventaHora/${codigo}`)
       .then(res => setData(res.data))
       .catch(err => console.error(err));
   }, [codigo]);
