@@ -20,6 +20,16 @@ export interface SucursalPowerBi {
   ESTADO: string;
 }
 
+export interface HoraDispoSucursal {
+  ZONA: string;
+  CCOSTO: string;
+  CODIGO: string;
+  HABIL: number;
+  FESTIVO: number;
+  HORADISPO: string;
+  VERSION: string;
+}
+
 export interface Products {
   producto: string
   vta_dia: number

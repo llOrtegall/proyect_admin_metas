@@ -1,5 +1,5 @@
 import { SelectSupervisor, SelectCanal, SelectCelula, SelectEstado, SelectSubzona } from '../components/SelectsDetailSucursal'
-import { SucursalPowerBi } from '../types/interfaces'
+import { SucursalPowerBi, HoraDispoSucursal } from '../types/interfaces'
 import { URL_API_DATA } from '../utils/constants'
 import { useParams } from 'react-router-dom'
 import { Badge } from '../components/Badge'
@@ -13,12 +13,16 @@ export default function SucursalDetail() {
   const { codigo } = useParams<{ codigo: string }>()
 
   const [sucursal, setSucursal] = useState<SucursalPowerBi | undefined>(undefined)
+  const [horaDispo, setHoraDispo] = useState<HoraDispoSucursal[]>([])
 
   const [reload, setReload] = useState(false)
 
   useEffect(() => {
     axios.get(`${URL_API_DATA}/sucursalPB/${codigo}`)
-      .then(res => setSucursal(res.data))
+      .then(res => {
+        setSucursal(res.data.sucursal)
+        setHoraDispo(res.data.horaDispo)
+      })
       .catch(err => console.log(err))
   }, [codigo, reload])
 
@@ -188,6 +192,29 @@ export default function SucursalDetail() {
             </button>
           </div>
         </form>
+      </Card>
+
+      <Card className='border-t-4 border-blue-500'>
+        <table className='w-full'>
+          <thead>
+            <tr className='bg-blue-500 text-white'>
+              <th className='p-2'>Hábil</th>
+              <th className='p-2'>Festivo</th>
+              <th className='p-2'>Hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              horaDispo.map((hora, index) => (
+                <tr key={index} className='text-center'>
+                  <td className='p-2 text-black'>{hora.HABIL}</td>
+                  <td className='p-2 text-black'>{hora.FESTIVO}</td>
+                  <td className='p-2 text-black'>{hora.HORADISPO}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </Card>
 
     </section>
