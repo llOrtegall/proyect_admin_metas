@@ -12,15 +12,17 @@ class HoraDispoSucursal extends Model<InferAttributes<HoraDispoSucursal>, InferC
 }
 
 HoraDispoSucursal.init({
-  ZONA: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-  CCOSTO: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-  CODIGO: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
+  ZONA: { type: DataTypes.STRING(10), allowNull: false, primaryKey: true },
+  CCOSTO: { type: DataTypes.STRING(10), allowNull: false, primaryKey: true },
+  CODIGO: { type: DataTypes.STRING(10), allowNull: false, primaryKey: true },
   HABIL: { type: DataTypes.INTEGER, allowNull: false },
   FESTIVO: { type: DataTypes.INTEGER, allowNull: false },
-  HORADISPO: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-  VERSION: { type: DataTypes.STRING, allowNull: false }
+  HORADISPO: { type: DataTypes.STRING(5), allowNull: false, primaryKey: true },
+  VERSION: { type: DataTypes.STRING(20), allowNull: false }
 }, {
   sequelize: PowerBI,
   tableName: 'HORASDISPO_SUCURSAL',
   timestamps: false
 })
+
+export { HoraDispoSucursal }

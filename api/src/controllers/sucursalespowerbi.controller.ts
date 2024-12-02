@@ -1,4 +1,5 @@
 import { SucursalesPowerBi } from '../model/sucpowerbi.model';
+import { HoraDispoSucursal } from '../model/hora_dispo_suc';
 import { Request, Response } from 'express';
 
 export const getSucursalesPowerBi = async (req: Request, res: Response) => {
@@ -26,11 +27,15 @@ export const getSucursalPowerBi = async (req: Request, res: Response) => {
       where: { CODIGO: codigo }
     })
 
-    if (!sucursal) {
-      return res.status(404).json({ message: 'No se encontró la sucursal' });
+    const horaDispo = await HoraDispoSucursal.findAll({
+      where: { CODIGO: codigo }
+    });
+
+    if (!sucursal || !horaDispo) {
+      return res.status(404).json({ message: 'No se encontró la sucursal y/o hora disponibilidad' });
     }
 
-    res.status(200).json(sucursal);
+    res.status(200).json({ sucursal, horaDispo });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al obtener la sucursal' });
