@@ -1,14 +1,9 @@
+import { DB_POWERBI_DATABASE, DB_POWERBI_HOST, DB_POWERBI_PASS, DB_POWERBI_PORT, DB_POWERBI_USER } from '../config/envSchema';
 import { Sequelize } from 'sequelize';
 
-const HOST_POWERBI = process.env.DB_POWERBI_HOST!;
-const PORT_POWERBI = process.env.DB_POWERBI_PORT!;
-const USER_POWERBI = process.env.DB_POWERBI_USER!;
-const PASS_POWERBI = process.env.DB_POWERBI_PASS!;
-const DB_POWERBI = process.env.DB_POWERBI_DATABASE!;
-
-export const PowerBI = new Sequelize(DB_POWERBI, USER_POWERBI, PASS_POWERBI, {
-  host: HOST_POWERBI,
-  port: parseInt(PORT_POWERBI),
+export const PowerBI = new Sequelize(DB_POWERBI_DATABASE, DB_POWERBI_USER, DB_POWERBI_PASS, {
+  host: DB_POWERBI_HOST,
+  port: DB_POWERBI_PORT,
   dialect: 'mysql',
   timezone: '-05:00',
   logging: false
