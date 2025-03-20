@@ -4,11 +4,15 @@ import axios from 'axios';
 import { URL_API_DATA } from '../utils/constants';
 
 export interface Logueo {
-  username: string;
-  sucursal: number;
+  SUCURSAL: number;
+  NOMBRES: string;
+  DOCUMENTO: string;
+  NOMBRECARGO: string;
+  FECHACREATE: string;
+  FECHAUPDATE: string;
 }
 
-function UsuariosLogueados () {
+function UsuariosLogueados() {
   const [logueo, setLogueo] = useState<Logueo[]>([]);
   const [fecha, setFecha] = useState<string>('');
   const [filter, setFilter] = useState<string>('');
@@ -19,19 +23,19 @@ function UsuariosLogueados () {
       .catch(error => console.log(error));
   }, [fecha]);
 
-  const dataFiltered = logueo.filter(log => log.sucursal.toString().includes(filter))
+  const dataFiltered = logueo.filter(log => log.SUCURSAL.toString().includes(filter))
 
   return (
     <section className='text-black'>
       <div className='flex items-center justify-around bg-slate-200 px-4 py-2 rounded-t-md'>
-        <h1 className='text-sm 2xl:text-lg 3xl:text-2xl font-bold'>Cumplimiento Sugeridos Multired</h1>
+        <h1 className='text-sm 2xl:text-lg 3xl:text-2xl font-bold'>Usuarios Logueados</h1>
         <div>
           <label className='text-xs 2xl:text-sm 3xl:text-base '>Sucursal:</label>
-          <input type='search' className='text-xs 2xl:text-sm 3xl:text-base border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)}/>
+          <input type='search' className='text-xs 2xl:text-sm 3xl:text-base border border-gray-300 rounded-md' placeholder='N° Sucursal' value={filter} onChange={ev => setFilter(ev.target.value)} />
         </div>
         <form>
           <label className='text-xs 2xl:text-sm 3xl:text-base '>Fecha:</label>
-          <input type='date' className='text-xs 2xl:text-sm 3xl:text-base border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
+          <input type='date' className='text-xs 2xl:text-sm 3xl:text-base border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)} />
         </form>
         {/* <ExcelData datos={sugeridos} /> */}
       </div>
@@ -40,14 +44,30 @@ function UsuariosLogueados () {
           <TableHead className='sticky top-0 bg-blue-100'>
             <TableRow>
               <TableHeaderCell>Sucursal</TableHeaderCell>
-              <TableHeaderCell>Username</TableHeaderCell>
+              <TableHeaderCell>Documento</TableHeaderCell>
+              <TableHeaderCell>Nnombres</TableHeaderCell>
+              <TableHeaderCell>Cargo</TableHeaderCell>
+              <TableHeaderCell>Hora Primer Login</TableHeaderCell>
+              <TableHeaderCell>Hora Ultimo Login</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {dataFiltered.map((log, index) => (
               <TableRow key={index}>
-                <TableCell>{log.sucursal}</TableCell>
-                <TableCell>{log.username}</TableCell>
+                <TableCell>{log.SUCURSAL}</TableCell>
+                <TableCell>{log.DOCUMENTO}</TableCell>
+                <TableCell>{log.NOMBRES}</TableCell>
+                <TableCell>{log.NOMBRECARGO}</TableCell>
+                <TableCell>
+                  {log.FECHACREATE.split('T')[0].split('-').reverse().join('/')}
+                  {' - '}
+                  {log.FECHACREATE.split('T')[1].slice(0, 8)}
+                </TableCell>
+                <TableCell>
+                  {log.FECHAUPDATE.split('T')[0].split('-').reverse().join('/')}
+                  {' - '}
+                  {log.FECHAUPDATE.split('T')[1].slice(0, 8)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
