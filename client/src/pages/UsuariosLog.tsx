@@ -56,8 +56,8 @@ function UsuariosLogueados() {
               <TableRow key={index}>
                 <TableCell>{log.SUCURSAL}</TableCell>
                 <TableCell>{log.DOCUMENTO}</TableCell>
-                <TableCell>{log.NOMBRES}</TableCell>
-                <TableCell>{log.NOMBRECARGO}</TableCell>
+                <TableCell className='text-left'>{log.NOMBRES}</TableCell>
+                <TableCell className='text-left'>{log.NOMBRECARGO}</TableCell>
                 <TableCell>
                   {log.FECHACREATE.split('T')[0].split('-').reverse().join('/')}
                   {' - '}
