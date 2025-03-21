@@ -54,3 +54,12 @@ export interface User {
   process: string,
   sub_process: string,
 }
+
+export interface Logueo {
+  SUCURSAL: number;
+  NOMBRES: string;
+  DOCUMENTO: string;
+  NOMBRECARGO: string;
+  FECHACREATE: string;
+  FECHAUPDATE: string;
+}
