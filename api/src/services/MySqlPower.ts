@@ -10,6 +10,7 @@ interface Logueo extends RowDataPacket {
   FECHAUPDATE: Date;
 }
 
+
 async function SelectQuery<T>(queryStrg: string, params: (string | number)[]): Promise<T[]> {
   try {
     const [results] = await PoolConnection().execute(queryStrg, params);
@@ -20,12 +21,15 @@ async function SelectQuery<T>(queryStrg: string, params: (string | number)[]): P
   }
 }
 
-async function getAllLogueos(fecha: string): Promise<Logueo[]> {
+async function getAllLogueos(fecha: string, empresa: string): Promise<Logueo[]> {
+
+  const company = empresa === 'Multired' ? "39629, 39630, 39631" : "39632";
+
   const query = `
     SELECT HL.SUCURSAL, V.DOCUMENTO, V.NOMBRES, V.NOMBRECARGO, HL.FECHA_LOGIN, HL.FECHACREATE, HL.FECHAUPDATE
     FROM HIST_USUARIOS_LOGUEADOS AS HL
     JOIN VENDEDORES V ON SUBSTR(HL.USERNAME, 3) = V.DOCUMENTO
-    WHERE HL.FECHA_LOGIN = COALESCE(?, CURDATE());
+    WHERE HL.FECHA_LOGIN = COALESCE(?, CURDATE()) AND V.CCOSTO IN (${company});
   `;
   return SelectQuery<Logueo>(query, [fecha]);
 }
