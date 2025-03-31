@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthProvider';
 import { URL_API_DATA } from '../utils/constants';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { ButtonExportSugeridos } from '../components/exports/ExportSugeridos';
 
 function Sugeridos() {
   const [sugeridos, setSugeridos] = useState<SugeridosInterface[]>([]);
@@ -33,7 +34,7 @@ function Sugeridos() {
           <label className='text-xs 2xl:text-sm 3xl:text-lg'>Fecha:</label>
           <input type='date' className='text-xs 2xl:text-sm 3xl:text-lg border border-gray-300 rounded-md' value={fecha} onChange={ev => setFecha(ev.target.value)}/>
         </form>
-        {/* <ExcelData datos={sugeridos} /> */}
+        <ButtonExportSugeridos datos={sugeridos} />
       </div>
       <div className='h-[89vh] 3xl:h-[92vh] overflow-y-auto'>
         <Table>

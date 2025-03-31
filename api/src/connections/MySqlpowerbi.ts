@@ -7,7 +7,7 @@ const pool = createPool({
   database: DB_POWERBI_DATABASE,
   user: DB_POWERBI_USER,
   password: DB_POWERBI_PASS,
-  timezone: 'UTC',
+  timezone: '-00:00',
   connectionLimit: 10
 })
 

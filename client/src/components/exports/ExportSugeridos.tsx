@@ -1,37 +1,41 @@
+import { SugeridosInterface } from '../../types/Sugeridos'
 import { utils, ColInfo, writeFile } from 'xlsx'
-import { Sugerido } from '../pages/Sugeridos'
 import { toast } from 'sonner'
 
-const generateExcelData = (datos: Sugerido[]) => {
+const generateExcelData = (datos: SugeridosInterface[]) => {
   const titulo = [{ A: 'Reporte Sugeridos' }]
   const headers = [
     {
-      A: 'Sucursal',
+      A: 'ID',
       B: 'Documento',
       C: 'Nombres',
-      D: 'Sugerido 1',
-      E: 'Sugerido 2',
-      F: 'Venta Sugerido',
-      G: 'Meta Sugerido 1',
-      H: 'Meta Sugerido 2',
+      D: 'Sucursal',
+      E: 'Nombre Sucursal',
+      F: 'Categoría',
+      G: 'Producto',
+      H: 'Valor Sugerido',
+      I: 'Valor Meta',
+      J: 'Estado'
     }
   ]
 
   const rows = datos.map( sugerido => ({
-    A: sugerido.sucursal,
-    B: sugerido.documento,
-    C: sugerido.nombres,
-    D: sugerido.sugerido1,
-    E: sugerido.sugerido2,
-    F: sugerido.venta_sugerido,
-    G: sugerido.meta_sugerido1,
-    H: sugerido.meta_sugerido2
+    A: sugerido.ID,
+    B: sugerido.DOCUMENTO,
+    C: sugerido.NOMBRES,
+    D: sugerido.SUCURSAL,
+    E: sugerido.NOMBRE_SUCURSAL,
+    F: sugerido.CATEGORIA,
+    G: sugerido.PRODUCTO,
+    H: sugerido.VALOR_SUGERIDO,
+    I: sugerido.VALOR_META,
+    J: sugerido.ESTADO
   }))
 
   return [...titulo, ...headers, ...rows]
 }
 
-const createExcelFile = (datos: Sugerido[]) => {
+const createExcelFile = (datos: SugeridosInterface[]) => {
   const Informacion = generateExcelData(datos)
 
   const libro = utils.book_new()
@@ -51,7 +55,7 @@ const createExcelFile = (datos: Sugerido[]) => {
   writeFile(libro, 'ReporteSugeridos.xlsx')
 }
 
-const ButtonExportExcel = ({ datos }: { datos: Sugerido[] }): JSX.Element => {
+export const ButtonExportSugeridos = ({ datos }: { datos: SugeridosInterface[] }): JSX.Element => {
   const handleDownload = (): void => {
 
     const promises = new Promise((resolve) => {
@@ -78,5 +82,3 @@ const ButtonExportExcel = ({ datos }: { datos: Sugerido[] }): JSX.Element => {
     </button>
   )
 }
-
-export default ButtonExportExcel;
