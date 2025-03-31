@@ -1,46 +1,44 @@
-import { Model, InferAttributes, InferCreationAttributes, DataTypes } from 'sequelize';
-import { con_db } from '../connections/index';
+import { Model, DataTypes, InferAttributes, InferCreationAttributes } from 'sequelize';
+import { PowerBI } from '../connections/powerbi';
 
-class Sugeridos extends Model<InferAttributes<Sugeridos>, InferCreationAttributes<Sugeridos>> {
-  declare FECHA: Date;
-  declare ZONA: number;
-  declare SUCURSAL: number;
-  declare USUARIO: string;
-  declare NOMBRES: string;
-  declare SUGERIDO1: string;
-  declare SUGERIDO2: string;
-  declare VTA_CHANCE: number;
-  declare VTA_PAGAMAS: number;
-  declare VTA_PAGATODO: number;
-  declare VTA_GANE5: number;
-  declare VTA_PATA_MILLONARIA: number;
-  declare VTA_DOBLECHANCE: number;
-  declare VTA_CHANCE_MILLONARIO: number;
-  declare META_SUG1: number;
-  declare META_SUG2: number;
+export class SugeridosVendedorPB extends Model<InferAttributes<SugeridosVendedorPB>, InferCreationAttributes<SugeridosVendedorPB>> {
+  declare ID: number;
+  declare FECHA: string;
+  declare ZONA: string;
+  declare CCOSTO: string;
+  declare SUCURSAL: string;
+  declare LOGIN: string;
+  declare CATEGORIA: string;
+  declare PRODUCTO: string;
+  declare VTA_SUGERIDO: number;
+  declare FRM_SUGERIDO: number;
+  declare META_CANTIDAD: number;
+  declare META_VALOR: number;
+  declare ESTADO: string;
+  declare VERSION: string;
 }
 
-Sugeridos.init({
-  FECHA: { type: DataTypes.DATE, allowNull: false },
-  ZONA: { type: DataTypes.INTEGER, allowNull: false },
-  SUCURSAL: { type: DataTypes.INTEGER, allowNull: false },
-  USUARIO: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-  NOMBRES: { type: DataTypes.STRING, allowNull: false },
-  SUGERIDO1: { type: DataTypes.STRING, allowNull: false },
-  SUGERIDO2: { type: DataTypes.STRING, allowNull: false },
-  VTA_CHANCE: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  VTA_PAGAMAS: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  VTA_PAGATODO: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  VTA_GANE5: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  VTA_PATA_MILLONARIA: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  VTA_DOBLECHANCE: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  VTA_CHANCE_MILLONARIO: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  META_SUG1: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  META_SUG2: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
+SugeridosVendedorPB.init({
+  ID: { type: DataTypes.INTEGER, allowNull: true },
+  FECHA: { type: DataTypes.DATEONLY, allowNull: false },
+  ZONA: { type: DataTypes.STRING(10), allowNull: false },
+  CCOSTO: { type: DataTypes.STRING(10), allowNull: false },
+  SUCURSAL: { type: DataTypes.STRING(10), allowNull: false },
+  LOGIN: { type: DataTypes.STRING(20), allowNull: true },
+  CATEGORIA: { type: DataTypes.STRING(20), allowNull: true },
+  PRODUCTO: { type: DataTypes.STRING(50), allowNull: true },
+  VTA_SUGERIDO: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+  FRM_SUGERIDO: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+  META_CANTIDAD: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+  META_VALOR: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+  ESTADO: {
+    type: DataTypes.ENUM('INICIAL', 'ENPROGRESO', 'SUPERADO'),
+    allowNull: true,
+    defaultValue: null
+  },
+  VERSION: { type: DataTypes.STRING(20), allowNull: true }
 }, {
-  sequelize: con_db,
-  tableName: 'SUGERIDOS_VENDEDOR',
+  sequelize: PowerBI,
+  tableName: 'SUGERIDOSVENDEDOR',
   timestamps: false
-});
-
-export { Sugeridos };
+})
