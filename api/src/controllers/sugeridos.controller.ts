@@ -1,36 +1,57 @@
-import { Sugeridos } from '../model/sugeridos.model';
+import { SugeridosVendedorPB } from '../model/sugeridos.model';
 import { Request, Response } from 'express';
 import { fn } from 'sequelize';
 import { z } from 'zod';
 
 export const getSugeridos = async (req: Request, res: Response) => {
-  const { fecha } = req.query;
+  const params = req.query;
 
-  const fechaSchema = z.optional(z.string());
-  const result = fechaSchema.safeParse(fecha);
+  const schema = z.object({
+    fecha: z.string().optional(),
+    zona: z.string().min(3).max(10)
+  })
 
-  const fechaQuery = result.data && result.data.length > 0 ? result.data.slice(0, 10) : fn('CURDATE');
+  const { success, data, error } = schema.safeParse(params)
+
+  if (!success) {
+    return res.status(400).json({ error: error.format() });
+  }
+
+  const { fecha, zona } = data;
 
   try {
-    const sugeridos = await Sugeridos.findAll({
-      attributes: { exclude: ['FECHA', 'ZONA',] },
-      where: { FECHA: fechaQuery, ZONA: 39627 },
+    const query = `
+      SELECT
+        SV.ID, 
+        V.DOCUMENTO,
+        V.NOMBRES,
+        V.NOMBRECARGO,
+        SV.SUCURSAL,
+        S.NOMBRE AS NOMBRE_SUCURSAL,
+        S.TIPO AS TIPO,
+        SV.CATEGORIA, 
+        SV.PRODUCTO, 
+        SV.VTA_SUGERIDO AS VALOR_SUGERIDO, 
+        SV.META_VALOR AS VALOR_META,
+        SV.ESTADO
+      FROM SUGERIDOSVENDEDOR AS SV
+      JOIN VENDEDORES AS V
+        ON SUBSTRING(SV.LOGIN, 3) = V.DOCUMENTO
+      JOIN SUCURSALES AS S
+        ON SV.SUCURSAL = S.CODIGO
+      WHERE SV.FECHA = :fecha
+      AND SV.ZONA = :zona
+    `;
+  
+    const result = await SugeridosVendedorPB.sequelize?.query(query, {
+      replacements: { fecha: fecha || new Date().toISOString().split('T')[0], zona },
     });
-
-    const sugeridosMap = sugeridos.map( sug => ({
-      sucursal: sug.SUCURSAL,
-      documento: sug.USUARIO.split('CV')[1],
-      nombres: sug.NOMBRES,
-      sugerido1: sug.SUGERIDO1,
-      sugerido2: sug.SUGERIDO2,
-      venta_sugerido: sug.VTA_CHANCE + sug.VTA_PAGAMAS + sug.VTA_PAGATODO + sug.VTA_GANE5 + sug.VTA_PATA_MILLONARIA + sug.VTA_DOBLECHANCE + sug.VTA_CHANCE_MILLONARIO,
-      meta_sugerido1: sug.META_SUG1,
-      meta_sugerido2: sug.META_SUG2
-    }))
-
-    res.json(sugeridosMap.sort((a, b) => b.venta_sugerido - a.venta_sugerido));
+  
+    const [rows, dates] = result ?? [[], []]; // Provide a fallback for undefined
+  
+    return res.status(200).json(rows);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Error fetching Sugeridos:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
