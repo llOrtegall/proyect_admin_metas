@@ -30,7 +30,7 @@ const TableHeaderCell = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttri
   { className, ...props }, forwardedRef) =>
 (
   <th ref={forwardedRef} className={cx(
-    'p-2 2xl:p-4 text-xs 2xl:text-sm 3xl:text-base',
+    'p-2 text-xs',
     // text color
     'text-gray-900 dark:text-gray-50',
     // border color
@@ -78,7 +78,7 @@ const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<
   (
     <td ref={forwardedRef} className={cx(
       // base
-      'p-2 2xl:p-1 text-xs 2xl:text-sm 3xl:text-base text-center',
+      'p-2 2xl:p-1 text-xs',
       // text color
       'text-gray-600 dark:text-gray-400',
       className,
