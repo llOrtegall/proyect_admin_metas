@@ -1,8 +1,8 @@
 import { ProgressCircle } from '../components/ProgressCircle';
-import { URL_API_DATA } from '../utils/constants';
 import { ProgressBar } from '../components/ProgressBar';
 import { ResponseProducts } from '../types/interfaces';
 import { DonutChart } from '../components/DonutChart';
+import { URL_API_DATA } from '../utils/constants';
 import { Callout } from '../components/Callout';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';

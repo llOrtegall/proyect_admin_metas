@@ -1,10 +1,10 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { ButtonExportSugeridos } from '../components/exports/ExportSugeridos';
 import { SugeridosInterface } from '../types/Sugeridos';
 import { useAuth } from '../contexts/AuthProvider';
 import { URL_API_DATA } from '../utils/constants';
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { ButtonExportSugeridos } from '../components/exports/ExportSugeridos';
 
 function Sugeridos() {
   const [sugeridos, setSugeridos] = useState<SugeridosInterface[]>([]);

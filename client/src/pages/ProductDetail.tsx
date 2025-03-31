@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { useParams, useNavigate } from 'react-router-dom';
+import { URL_API_DATA } from '../utils/constants';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { URL_API_DATA } from '../utils/constants';
 
 interface Product {
   codigo: number;

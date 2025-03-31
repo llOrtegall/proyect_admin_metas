@@ -1,8 +1,8 @@
 import { AreaChart } from '../components/ChartUtils';
+import { URL_API_DATA } from '../utils/constants';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { URL_API_DATA } from '../utils/constants';
 
 interface VentaHora {
   ID: number;

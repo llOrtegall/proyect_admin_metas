@@ -1,5 +1,5 @@
-import { HistorialLogin } from '../components/exports/HistorialLogin';
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { HistorialLogin } from '../components/exports/HistorialLogin';
 import { useLogueos } from '../hooks/useLogueos';
 import { useState } from 'react';
 
