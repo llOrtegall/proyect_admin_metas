@@ -8,6 +8,7 @@ export interface SugeridosInterface {
   ID:              number;
   DOCUMENTO:       string;
   NOMBRES:         string;
+  FECHA:           string;
   NOMBRECARGO:     string;
   SUCURSAL:        string;
   NOMBRE_SUCURSAL: string;

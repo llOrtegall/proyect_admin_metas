@@ -7,29 +7,31 @@ const generateExcelData = (datos: SugeridosInterface[]) => {
   const headers = [
     {
       A: 'ID',
-      B: 'Documento',
-      C: 'Nombres',
-      D: 'Sucursal',
-      E: 'Nombre Sucursal',
-      F: 'Categoría',
-      G: 'Producto',
-      H: 'Valor Sugerido',
-      I: 'Valor Meta',
-      J: 'Estado'
+      B: 'FECHA',
+      C: 'Documento',
+      D: 'Nombres',
+      E: 'Sucursal',
+      F: 'Nombre Sucursal',
+      G: 'Categoría',
+      H: 'Producto',
+      I: 'Valor Sugerido',
+      J: 'Valor Meta',
+      K: 'Estado'
     }
   ]
 
   const rows = datos.map( sugerido => ({
     A: sugerido.ID,
-    B: sugerido.DOCUMENTO,
-    C: sugerido.NOMBRES,
-    D: sugerido.SUCURSAL,
-    E: sugerido.NOMBRE_SUCURSAL,
-    F: sugerido.CATEGORIA,
-    G: sugerido.PRODUCTO,
-    H: sugerido.VALOR_SUGERIDO,
-    I: sugerido.VALOR_META,
-    J: sugerido.ESTADO
+    B: sugerido.FECHA,
+    C: sugerido.DOCUMENTO,
+    D: sugerido.NOMBRES,
+    E: sugerido.SUCURSAL,
+    F: sugerido.NOMBRE_SUCURSAL,
+    G: sugerido.CATEGORIA,
+    H: sugerido.PRODUCTO,
+    I: sugerido.VALOR_SUGERIDO,
+    J: sugerido.VALOR_META,
+    K: sugerido.ESTADO
   }))
 
   return [...titulo, ...headers, ...rows]

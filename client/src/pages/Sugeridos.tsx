@@ -41,6 +41,7 @@ function Sugeridos() {
           <TableHead className='sticky top-0 bg-blue-100'>
             <TableRow>
               <TableHeaderCell>ID</TableHeaderCell>
+              <TableHeaderCell>FECHA</TableHeaderCell>
               <TableHeaderCell>DOCUMENTO</TableHeaderCell>
               <TableHeaderCell>NOMBRES</TableHeaderCell>
               <TableHeaderCell>SUCURSAL</TableHeaderCell>
@@ -56,6 +57,7 @@ function Sugeridos() {
             {dataFiltered.map((sug, index) => (
               <TableRow key={index + 1}>
                 <TableCell className="truncate max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">{sug.ID}</TableCell>
+                <TableCell className="truncate max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">{sug.FECHA}</TableCell>
                 <TableCell className="truncate max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">{sug.DOCUMENTO}</TableCell>
                 <TableCell className="truncate max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">{sug.NOMBRES}</TableCell>
                 <TableCell className="truncate max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">{sug.SUCURSAL}</TableCell>

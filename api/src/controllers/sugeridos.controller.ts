@@ -24,6 +24,7 @@ export const getSugeridos = async (req: Request, res: Response) => {
       SELECT
         SV.ID, 
         V.DOCUMENTO,
+        SV.FECHA,
         V.NOMBRES,
         V.NOMBRECARGO,
         SV.SUCURSAL,
