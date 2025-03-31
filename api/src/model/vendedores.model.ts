@@ -1,26 +1,27 @@
-import { InferAttributes, InferCreationAttributes, DataTypes, Model } from 'sequelize';
+import { Model, DataTypes, InferAttributes, InferCreationAttributes } from "sequelize";
 import { PowerBI } from '../connections/powerbi';
 
-class Vendedores extends Model<InferAttributes<Vendedores>, InferCreationAttributes<Vendedores>> {
-  declare USERNAME: string;
-  declare SUCURSAL: number;
-  declare FECHA_LOGIN: Date;
-  declare FECHACREATE?: Date;
-  declare FECHAUPDATE?: Date;
-  declare VERSION: number;
+class VendedoresPB extends Model<InferAttributes<VendedoresPB>, InferCreationAttributes<VendedoresPB>> {
+  declare DOCUMENTO: string;
+  declare NOMBRES: string;
+  declare GRPVTAS_CODIGO: string;
+  declare CARGO: string;
+  declare VERSION: string;
+  declare NOMBRECARGO: string;
+  declare CCOSTO: string;
 }
 
-Vendedores.init({
-  USERNAME: { type: DataTypes.STRING(15), allowNull: false, primaryKey: true },
-  SUCURSAL: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
-  FECHA_LOGIN: { type: DataTypes.DATE, allowNull: false, primaryKey: true, defaultValue: DataTypes.NOW },
-  FECHACREATE: { type: DataTypes.DATE, allowNull: true, defaultValue: DataTypes.NOW },
-  FECHAUPDATE: { type: DataTypes.DATE, allowNull: true, defaultValue: DataTypes.NOW },
-  VERSION: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 }
+VendedoresPB.init({
+  DOCUMENTO: { type: DataTypes.STRING(20), primaryKey: true },
+  NOMBRES: { type: DataTypes.STRING(60) },
+  GRPVTAS_CODIGO: { type: DataTypes.STRING(30) },
+  CARGO: { type: DataTypes.STRING(30) },
+  VERSION: { type: DataTypes.STRING(20) },
+  NOMBRECARGO: { type: DataTypes.STRING(30) },
+  CCOSTO: { type: DataTypes.STRING(10) },
 }, {
   sequelize: PowerBI,
-  tableName: 'Vendedores',
-  timestamps: false
-});
-
-export { Vendedores };
+  tableName: "VENDEDORES",
+  timestamps: false,
+}
+);
