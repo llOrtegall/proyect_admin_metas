@@ -1,30 +1,36 @@
-import { URL_API_LOGIN, APP_NAME} from '../utils/constants'
+import { URL_API_LOGIN } from '../utils/constants'
 import { RiUserLine, RiLockLine } from '@remixicon/react'
 import { useAuth } from '../contexts/AuthProvider'
 import { Button } from '../components/Button'
 import { Input } from '../components/Input'
 import { Toaster, toast } from 'sonner'
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import axios from 'axios'
 
 function LoginPage() {
   const { setIsAuthenticated } = useAuth()
+  const [loading, setLoading] = useState(false)
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    setLoading(true)
     const form = e.target as HTMLFormElement;
     const username = form.username.value;
     const password = form.password.value;
 
-    axios.post(`${URL_API_LOGIN}/login`, { username, password, app: APP_NAME })
+    axios.post(`${URL_API_LOGIN}/login`, { username, password })
       .then((res) => {
-        if(res.status === 200){
+        if (res.status === 200) {
           setIsAuthenticated(true)
-        } 
+        }
       })
       .catch((error) => {
         console.log('error', error)
         toast.error('Usuario o contraseña incorrectos', { description: 'Por favor, intenta de nuevo' })
+      })
+      .finally(() => {
+        setLoading(false)
       })
 
   }
@@ -66,8 +72,15 @@ function LoginPage() {
           </div>
         </article>
 
-        <Button type='submit' >
-          Iniciar Sesión
+        <Button type='submit' disabled={loading}>
+          {
+            loading ? <div className='flex items-center justify-center gap-2'>
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 1 1 16 0A8 8 0 0 1 4 12z"></path>
+              </svg>
+              Iniciando ...</div> : 'Iniciar Sesion'
+          }
         </Button>
       </form>
 
