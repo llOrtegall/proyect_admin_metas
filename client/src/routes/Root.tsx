@@ -5,9 +5,9 @@ import NavBar from '../components/NavBar';
 import { Toaster } from 'sonner';
 
 function Root() {
-  const { isAuthenticated, empresa, setEmpresa } = useAuth();
+  const { user, empresa, setEmpresa } = useAuth();
 
-  if (!isAuthenticated) {
+  if (!user) {
     return <LoginPage />
   }
 

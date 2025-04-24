@@ -10,7 +10,7 @@ import axios from 'axios';
 function NavBar() {
   const { empresa, setIsAuthenticated } = useAuth();
   const handleLogout = () => {
-    axios.post(`${URL_API_LOGIN}/logout`)
+    axios.get(`${URL_API_LOGIN}/logout`)
       .then((res) => {
         console.log(res)
         setIsAuthenticated(false)
