@@ -7,6 +7,7 @@ import { RoutesPowerBi } from './routes/sucursalespowerbi.routes';
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
+import { PowerBI } from './connections/powerbi';
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -26,4 +27,11 @@ app.use('/api', RoutesPowerBi)
 
 app.listen(port, () => {
   console.log(`Server running on: http://localhost:${port}`)
+})
+
+PowerBI.authenticate().then(() => {
+  console.log('PowerBI connected')
+}).catch((err) => {
+  console.log('PowerBI not connected', err)
+  process.exit(1)
 })
