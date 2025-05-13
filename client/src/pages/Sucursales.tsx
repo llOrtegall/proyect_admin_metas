@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { Badge } from '../components/Badge';
 import { Card } from '../components/Card';
 import axios from 'axios';
+import { ButtonExportSucursales } from '../components/exports/ExportSucursales';
 
 export default function SucursalesPage() {
   const [sucursales, setSucursales] = useState<SucursalPowerBi[]>([]);
@@ -49,6 +50,10 @@ export default function SucursalesPage() {
           <Badge variant='warning'>
             {sucursalesFiltered.length}
           </Badge>
+        </div>
+
+        <div>
+          <ButtonExportSucursales datos={sucursalesFiltered} />
         </div>
       </Card>
 
